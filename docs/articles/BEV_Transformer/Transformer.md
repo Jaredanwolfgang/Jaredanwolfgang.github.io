@@ -23,7 +23,7 @@ Compared with other networks, Transformer mainly focus on Attention. It has foll
 
 ## Structure
 
-![Transformer](../../articles/Transformer/transformer.png)
+![Transformer](../../public/articles/Transformer/transformer.png)
 
 The left side of figure is the Encoder, which is composed of a stack of $N=6$ identical layers. Each layer has two sub-layers: Multi-head self-attention mechanism and position-wise fully connected feed-forward network. 
 
@@ -31,7 +31,7 @@ The right side of figure is the Decoder, which is composed of a stack of $N=6$ i
 
 A residual connection around each of the sub-layers are employed, followed by layer normalization. 
 
-![MHA](../../articles/Transformer/MHA.png)
+![MHA](../../public/articles/Transformer/MHA.png)
 
 ## Some Key Points
 
