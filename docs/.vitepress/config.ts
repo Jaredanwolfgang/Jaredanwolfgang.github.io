@@ -4,9 +4,12 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "Jaredan's Blog",
   description: "You are to be who you are, and not who you think you should be.",
+  markdown: {
+    math: true
+  },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: '/images/avatar.jpg',
+    logo: '/avatar.jpg',
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Algorithms', link: '/articles/Algorithms/README' },
@@ -30,6 +33,7 @@ export default defineConfig({
       {
         text: 'BEV Transformer',
         items: [
+          { text: 'Transformer', link: '/articles/BEV_Transformer/Transformer' },
         ]
       },
       {

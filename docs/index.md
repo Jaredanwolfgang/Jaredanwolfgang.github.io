@@ -7,7 +7,7 @@ hero:
   text: The blog of Jaredan
   tagline: Be a practitioner...
   image:
-    src: /images/avatar.jpg
+    src: /avatar.jpg
     alt: Jaredan
   actions:
     - theme: brand
