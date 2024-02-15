@@ -96,14 +96,13 @@
     120deg,
     #edcfab 30%,
     #f98647 40%,
-    #05348b
+    #5d96ff
   );
 
   --vp-home-hero-image-background-image: linear-gradient(
     -45deg,
-    #edcfab 30%,
-    #f98647 40%,
-    #05348b
+    #edcfab 50%,
+    #5d96ff 50%
   );
   --vp-home-hero-image-filter: blur(44px);
 }

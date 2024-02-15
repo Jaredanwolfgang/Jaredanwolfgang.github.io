@@ -11,18 +11,14 @@ hero:
     alt: Jaredan
   actions:
     - theme: brand
-      text: Get Started
-      link: /guide/what-is-vitepress
-    - theme: alt
-      text: View on GitHub
-      link: https://github.com/Jaredanwolfgang
-
+      text: Get to know me
+      link: /introduction
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: INFP
+    details: Introverts with dominant feeling -- Introversion, Intuition, Feeling, Perception
+  - title: Computer Science Major
+    details: High Performance Computing, Automatic System, Computer Graphics.
+  - title: Language Learners
+    details: Chinese, English, German. Interested in Latin, Klingon, Linguistics.
 ---
 
