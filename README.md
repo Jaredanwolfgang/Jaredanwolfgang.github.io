@@ -1,1 +1,0 @@
-# Jaredanwolfgang.github.io
