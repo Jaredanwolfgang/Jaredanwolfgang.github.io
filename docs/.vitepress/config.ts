@@ -31,9 +31,15 @@ export default defineConfig({
         ]
       },
       {
-        text: 'BEV Transformer',
+        text: 'Essay Reading',
         items: [
           { text: 'Transformer', link: '/articles/BEV_Transformer/Transformer' },
+          { text: 'SWin Transformer', link: '/articles/BEV_Transformer/SWin_Transformer' },
+          { text: 'DETR', link: '/articles/BEV_Transformer/DeTR' },
+          { text: 'Deformable DETR', link: '/articles/BEV_Transformer/Deformable_DETR' },
+          { text: 'BEVFormer', link: '/articles/BEV_Transformer/BEVFormer' },
+          { text: 'Occupancy Network', link: '/articles/BEV_Transformer/OccNetwork' },
+          { text: 'Surround Occ', link: '/articles/BEV_Transformer/SurroundOcc' },
         ]
       },
       {

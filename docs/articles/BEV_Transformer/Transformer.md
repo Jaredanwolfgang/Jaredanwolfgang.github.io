@@ -46,3 +46,8 @@ The Value vector contains the actual information from the sequence that needs to
 
 ### Self-attention
 The self-attention mechanism works by computing a representation of an input sequence by considering how each element of the sequence interacts with every other element.The mechanism computes the dot product of the Query vector of each element with the Key vector of every other element to produce a score, indicating how much focus to put on other parts of the input sequence when encoding the current element.
+
+## Reference
+
+1. Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. Attention Is All You Need, August 2023. arXiv:1706.03762 [cs].
+1. [Transformer论文逐段精读【论文精读】](https://www.bilibili.com/video/BV1pu411o7BE/?spm_id_from=333.788&vd_source=87bb079e03d49083a7a4a54e76612043)
