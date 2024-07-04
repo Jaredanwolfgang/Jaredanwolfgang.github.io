@@ -19,13 +19,6 @@ export default defineConfig({
     ],
     sidebar: [
       {
-        text: 'Examples',
-        items: [
-          { text: 'API Examples', link: '/api-examples' },
-          { text: 'Markdown Examples', link: '/markdown-examples' }
-        ]
-      },
-      {
         text: 'Algorithms',
         items: [
         ]
@@ -52,7 +45,10 @@ export default defineConfig({
         items: [
           { text: 'CS109 Jungle', link: '/articles/Project_Hubs/CS109' },
           { text: 'CS211 Electronic Organ', link: '/articles/Project_Hubs/CS211' },
-          { text: 'CS213 Database API', link: '/articles/Project_Hubs/CS213' }
+          { text: 'CS213 Database API', link: '/articles/Project_Hubs/CS213' },
+          { text: 'CS214 Pipeline CPU', link: '/articles/Project_Hubs/CS214' },
+          { text: 'CS305 RDT Implementation', link: '/articles/Project_Hubs/CS305' },
+          { text: 'CS311 AI projects', link: '/articles/Project_Hubs/CS311' }
         ]
       }
     ],
