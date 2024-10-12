@@ -36,6 +36,7 @@ export default defineConfig({
       {
         text: 'Machine Learning',
         items: [
+          { text: 'Gaussian Distribution', link: '/articles/Notes/Gaussian_Distribution' },
         ]
       },
       {
