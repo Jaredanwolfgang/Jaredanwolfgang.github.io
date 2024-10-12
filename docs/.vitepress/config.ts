@@ -13,14 +13,15 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Algorithms', link: '/articles/Algorithms/README' },
-      { text: 'BEV Transformer', link: '/articles/BEV_Transformer/README' },
-      { text: 'Notes', link: '/articles/Notes/README' },
+      { text: 'Essay Reading', link: '/articles/BEV_Transformer/README' },
+      { text: 'Machine Learning', link: '/articles/Notes/README' },
       { text: 'Project Hubs', link: '/articles/Project_Hubs/README' }
     ],
     sidebar: [
       {
         text: 'Algorithms',
         items: [
+          { text: 'Dynamic Programming', link: '/articles/Algorithms/Dynamic_Programming' },
         ]
       },
       {
@@ -29,14 +30,11 @@ export default defineConfig({
           { text: 'Transformer', link: '/articles/BEV_Transformer/Transformer' },
           { text: 'SWin Transformer', link: '/articles/BEV_Transformer/SWin_Transformer' },
           { text: 'DETR', link: '/articles/BEV_Transformer/DeTR' },
-          { text: 'Deformable DETR', link: '/articles/BEV_Transformer/Deformable_DETR' },
           { text: 'BEVFormer', link: '/articles/BEV_Transformer/BEVFormer' },
-          { text: 'Occupancy Network', link: '/articles/BEV_Transformer/OccNetwork' },
-          { text: 'Surround Occ', link: '/articles/BEV_Transformer/SurroundOcc' },
         ]
       },
       {
-        text: 'Notes',
+        text: 'Machine Learning',
         items: [
         ]
       },

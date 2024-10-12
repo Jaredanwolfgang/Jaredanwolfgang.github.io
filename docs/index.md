@@ -14,11 +14,13 @@ hero:
       text: Get to know me
       link: /introduction
 features:
-  - title: INFP
-    details: Introverts with dominant feeling -- Introversion, Intuition, Feeling, Perception
-  - title: Computer Science Major
-    details: High Performance Computing, Automatic System, Computer Graphics.
-  - title: Language Learners
+  - title: Computer Science Major 💻
+    details: High Performance Computing, Automatic System, Distributed System, and more.
+  - title: Language Enthusiast 🌏
     details: Chinese, English, German. Interested in Latin, Klingon, Linguistics.
+  - title: Ultimate Frisbee 🥏
+    details: Cutter in the field, trying to make way to the handler position.
+  - title: Musical Lover 👯‍♂️
+    details: Currently addicted in EPIC the Musical, and the music of Lin-Manuel Miranda.
 ---
 
