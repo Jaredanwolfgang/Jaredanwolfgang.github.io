@@ -13,7 +13,7 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Algorithms', link: '/articles/Algorithms/README' },
-      { text: 'Essay Reading', link: '/articles/BEV_Transformer/README' },
+      { text: 'Essay Reading', link: '/articles/Essay_Reading/README' },
       { text: 'Machine Learning', link: '/articles/Notes/README' },
       { text: 'Project Hubs', link: '/articles/Project_Hubs/README' }
     ],
@@ -27,10 +27,10 @@ export default defineConfig({
       {
         text: 'Essay Reading',
         items: [
-          { text: 'Transformer', link: '/articles/BEV_Transformer/Transformer' },
-          { text: 'SWin Transformer', link: '/articles/BEV_Transformer/SWin_Transformer' },
-          { text: 'DETR', link: '/articles/BEV_Transformer/DeTR' },
-          { text: 'BEVFormer', link: '/articles/BEV_Transformer/BEVFormer' },
+          { text: 'Transformer', link: '/articles/Essay_Reading/Transformer' },
+          { text: 'SWin Transformer', link: '/articles/Essay_Reading/SWin_Transformer' },
+          { text: 'DETR', link: '/articles/Essay_Reading/DeTR' },
+          { text: 'BEVFormer', link: '/articles/Essay_Reading/BEVFormer' },
         ]
       },
       {
