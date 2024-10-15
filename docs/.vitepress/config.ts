@@ -38,6 +38,7 @@ export default defineConfig({
         items: [
           { text: 'CS329 ML Quizzes', link: '/articles/Notes/Quiz'},
           { text: 'Gaussian Distribution', link: '/articles/Notes/Gaussian_Distribution' },
+          { text: 'Conditional Gaussion', link: '/articles/Notes/Conditonal_Gaussion_Distribution'}
         ]
       },
       {
