@@ -8,7 +8,7 @@ $$
 
 其中$\mu_a$和$\mu_b$分别是$x_a$和$x_b$的均值，$\Sigma_{aa}$、$\Sigma_{ab}$、$\Sigma_{ba}$和$\Sigma_{bb}$分别是$x_a$和$x_b$之间的协方差矩阵.从协方差矩阵的对称性质，我们可以得到$\Sigma_{ab} = \Sigma_{ba}^T$.
 
-::: tip 精度矩阵
+::: tip **精度矩阵**
 我们定义精度矩阵$\Lambda$为协方差矩阵的逆：
 
 $$
@@ -45,7 +45,7 @@ $$
 \end{aligned}
 $$
 
-::: tip 舒尔补
+::: tip **舒尔补**
 我们可以利用舒尔补来计算分块矩阵的逆.假设我们有一个分块矩阵$M = \begin{bmatrix} A & B \\ C & D \end{bmatrix}$，其中$A$和$D$是方阵.我们可以得到$M$的逆：
 
 $$
