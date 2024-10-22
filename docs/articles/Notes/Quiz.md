@@ -36,7 +36,7 @@ $Y = AX + \omega$, where $\omega \sim \mathcal{N}(0, Q)$ and  $X \sim \mathcal{N
 2. $p(Y) \sim \int p(Y|X) p(X) d x \sim \mathcal{N}(A\mu_0, A\Sigma_0 A^T + Q)$.
 3. Assume that $p(X|Y) \sim \mathcal{N}(m, L)$, then we can use the equality of quadratic from to solve the problems. 
     1. $p(X|Y) \sim p(Y|X)p(X) = \mathcal{N}(Y| AX, Q) \mathcal{N}(X| \mu_0, \Sigma_9)$ 
-    2. $-\frac{1}{2}(x-m)^T L^{-1}(x-m) \propto  -\frac{1}{2}(y-Ax)^T Q^{-1}(y-Ax) -\frac{1}{2}(x-\mu_0)^T \Sigma_0^{-1}(x-\mu_0) $
+    2. $-\frac{1}{2}(x-m)^T L^{-1}(x-m) \propto  -\frac{1}{2}(y-Ax)^T Q^{-1}(y-Ax) -\frac{1}{2}(x-\mu_0)^T \Sigma_0^{-1}(x-\mu_0)$
     3. We can get the result: 
     $$
     \begin{aligned} 
