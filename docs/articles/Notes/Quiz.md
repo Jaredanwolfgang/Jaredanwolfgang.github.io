@@ -56,3 +56,24 @@ $Y = AX + \omega$, where $\omega \sim \mathcal{N}(0, Q)$ and  $X \sim \mathcal{N
     $$
     where $K = \Sigma_0 A^T (A^T\Sigma_0A + Q)^{-1}$
 4. $p(Y'|Y) \sim \int p(Y'|X) p(X|Y) d x \sim \mathcal{N}(Am, AL A^T + Q)$. The same format as question 2. 
+
+## Quiz 3
+::: tip
+1. Learning: $p(\theta|\mathcal{D}) \propto p(\mathcal{D}|\theta)p(\theta)$
+2. Prediction: $p(\mathcal{D}^{new}|\mathcal{D}) = \int p(\mathcal{D}^{new}|\theta)p(\theta|\mathcal{D})d\theta$
+3. Evaluation: $p(\mathcal{D}) = \int p(\mathcal{D}|\theta)p(\theta)d\theta$
+:::
+
+### Question
+
+Given $t = \Phi(x) \omega + v$ where $\Phi(x) = [1, x, x..., x^M]$ and $v \sim \mathcal{N}(0, \beta^{-1})$, $\mathcal{D} = \{[x_1,...,x_N], [t_1, ..., t_N]\}$
+1. What is the solution of $\omega_{ML}$?
+2. What is the solution of $\omega_{MAP}$ if $\omega \sim \mathcal{N}(0, \alpha^{-1}I)$?
+3. What is the predictive distribution if $\mathcal{D}^{new} = \{x^{new}, t^{new}\}$?
+4. What is the model evaluation?
+
+### Answer
+1. $J(\omega) = \frac{\beta}{2}(T-\Phi \omega)^T(T-\Phi\omega) \rightarrow \omega_{ML} = (\Phi^T\Phi)^{-1}\Phi^T T$
+2. $J(\omega) = \frac{\beta}{2}(T-\Phi\omega)^T(T-\Phi\omega) + \frac{\alpha}{2} \omega^T\omega \rightarrow \omega_{MAP} = (\beta\Phi^T\Phi + \alpha I)^{-1}\beta\Phi^T T$
+3. $\mathcal{N}(\Phi(x^{new})\omega_{MAP}, \Phi(x^{new})\Sigma_{MAP}\Phi(x^{new})^T+\beta I)$
+4. $\mathcal{N}(0, \alpha^{-1}\Phi\Phi^T+\beta^{-1}I)$
