@@ -43,6 +43,12 @@ export default defineConfig({
         ]
       },
       {
+        text: 'HPC Relevant',
+        items:[
+          { text: 'Slurm Installation', link: '/articles/HPC/Slurm'}
+        ]
+      },
+      {
         text: 'Project Hubs',
         items: [
           { text: 'CS109 Jungle', link: '/articles/Project_Hubs/CS109' },

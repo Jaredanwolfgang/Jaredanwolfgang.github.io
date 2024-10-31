@@ -42,4 +42,3 @@ Slurm的配置文件主要有两个：
 - `slurm`：Slurm的主要软件包，其中包含了`slurmctld`和`slurmd`等组件
 
 在去年配置Slurm的过程中，由于完全是在网上找一些并不完整的教程，导致了很多问题，今年找到了一个[Slurm Installer](https://github.com/NISP-GmbH/SLURM), 这个工具可以帮助我们自动化安装Slurm，非常方便. (支持 Ubuntu: 18.04, 20.04, 22.04, 24.04/ Centos: 7, 8 and 9/ Rocky Linux: 7, 8 and 9/ Alma Linux: 7, 8 and 9/ Amazon Linux: 2023)
-
