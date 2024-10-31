@@ -101,3 +101,96 @@ def pool2d(X, pool_size, mode='max'):
 ```
 
 池化层可以降低卷积层对位置的敏感性，同时降低对空间降采样表示的敏感性. 我们可以指定汇聚层的填充和步幅. 使用最大汇聚层以及大于1的步幅，可减少空间维度（如高度和宽度）.汇聚层的输出通道数与输入通道数相同.
+
+## 基础巻积神经网络
+
+### LeNet
+
+总体来看，LeNet（LeNet-5）由两个部分组成：
+- 卷积编码器：由两个卷积层组成
+- 全连接层密集块：由三个全连接层组成
+
+使用卷积层，我们可以在图像中保留空间结构。 同时，用卷积层代替全连接层的另一个好处是：模型更简洁、所需的参数更少
+
+LeNet的网络结构如下：
+
+![LeNet](./assets/lenet.svg)
+
+每个卷积块中的基本单元是一个卷积层、一个sigmoid激活函数和平均汇聚层. 
+
+```python
+net = nn.Sequential(
+    nn.Conv2d(1, 6, kernel_size=5, padding=2), # Input: (1, 28, 28), Output: (6, 28, 28)
+    nn.Sigmoid(), # Output: (6, 28, 28)
+    nn.AvgPool2d(kernel_size=2, stride=2), # Output: (6, 14, 14)
+    nn.Conv2d(6, 16, kernel_size=5), # Output: (16, 10, 10)
+    nn.Sigmoid(), # Output: (16, 10, 10)
+    nn.AvgPool2d(kernel_size=2, stride=2), # Output: (16, 5, 5)
+    nn.Flatten(),  # Output: (16*5*5)
+    nn.Linear(16 * 5 * 5, 120),  # Output: 120
+    nn.Sigmoid(), # Output: 120
+    nn.Linear(120, 84), # Output: 84
+    nn.Sigmoid(), # Output: 84
+    nn.Linear(84, 10)) # Output: 10
+```
+
+### AlexNet 深度卷积神经网络
+
+当时的神经网络仍然未成为主流方法，其原因有以下几点：
+
+- 数据集的规模相对较小，收集这些数据集需要昂贵的传感器
+- 硬件性能有限，无法支持更复杂的模型
+- 训练神经网络的一些关键技巧仍然缺失，包括启发式参数初始化、随机梯度下降的变体、非挤压激活函数和有效的正则化技术
+
+我们在对卷积层的讲解中提及，卷积核在于识别某种特征，因此观察图像特征的提取方法，并用此来改进网络生成的效果是当时比较热门的研究方向. 另外的研究方向，致力于研究如何更好地学习到某种特定的特征. AlexNet便是在这个赛道上杀出重围的一批黑马. 
+
+AlexNet的网络结构如下：
+
+![AlexNet](./assets/alexnet.svg)
+
+AlexNet与LeNet的主要区别在于AlexNet使用了8层卷积层和5层全连接层，而LeNet仅使用了2层卷积层和3层全连接层. 
+
+```python
+net = nn.Sequential(
+    nn.Conv2d(1, 96, kernel_size=11, stride=4, padding=1), nn.ReLU(), # Number of Channels is way larger than LeNet.
+    nn.MaxPool2d(kernel_size=3, stride=2),
+    nn.Conv2d(96, 256, kernel_size=5, padding=2), nn.ReLU(),
+    nn.MaxPool2d(kernel_size=3, stride=2),
+    nn.Conv2d(256, 384, kernel_size=3, padding=1), nn.ReLU(),
+    nn.Conv2d(384, 384, kernel_size=3, padding=1), nn.ReLU(),
+    nn.Conv2d(384, 256, kernel_size=3, padding=1), nn.ReLU(),
+    nn.MaxPool2d(kernel_size=3, stride=2),
+    nn.Flatten(),
+    nn.Linear(6400, 4096), nn.ReLU(),
+    nn.Dropout(p=0.5), # Dropout is used to avoid overfitting
+    nn.Linear(4096, 4096), nn.ReLU(),
+    nn.Dropout(p=0.5),
+    nn.Linear(4096, 10))
+```
+
+我们可以查看AlexNet第一层学到的特征信息：
+
+![AlexNet Features](./assets/filters.png)
+
+AlexNet和LeNet的设计理念非常相似，但也存在显著差异:
+- AlexNet比相对较小的LeNet5要深得多。AlexNet由八层组成：五个卷积层、两个全连接隐藏层和一个全连接输出层.
+- AlexNet使用ReLU而不是sigmoid作为其激活函数
+
+## 现代卷积神经网络
+
+### Visual Geometry Group (VGG)
+
+
+### Net in Net (NiN)
+
+
+### GoogLeNet
+
+
+### Batch Normalization
+
+
+### ResNet
+
+
+### DenseNet
