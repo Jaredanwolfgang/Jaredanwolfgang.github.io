@@ -32,6 +32,7 @@ export default defineConfig({
           { text: 'SWin Transformer', link: '/articles/Essay_Reading/SWin_Transformer' },
           { text: 'DETR', link: '/articles/Essay_Reading/DeTR' },
           { text: 'BEVFormer', link: '/articles/Essay_Reading/BEVFormer' },
+          { text: 'Diffusion', link: '/articles/Essay_Reading/Diffusion'}
         ]
       },
       {
