@@ -123,8 +123,8 @@ $$
 
 <table>
   <tr>
-    <td><img src="assets/wcdt.png" alt="wcdt" width="100%"></td>
-    <td><img src="assets/wcdt-3.png" alt="wcdt-2" width="100%"></td>
+    <td><img src="./assets/wcdt.png" alt="wcdt" width="100%"></td>
+    <td><img src="./assets/wcdt-3.png" alt="wcdt-2" width="100%"></td>
   </tr>
 </table>
 
