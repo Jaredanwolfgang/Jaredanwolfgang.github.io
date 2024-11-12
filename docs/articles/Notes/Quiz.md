@@ -77,3 +77,30 @@ Given $t = \Phi(x) \omega + v$ where $\Phi(x) = [1, x, x..., x^M]$ and $v \sim \
 2. $J(\omega) = \frac{\beta}{2}(T-\Phi\omega)^T(T-\Phi\omega) + \frac{\alpha}{2} \omega^T\omega \rightarrow \omega_{MAP} = (\beta\Phi^T\Phi + \alpha I)^{-1}\beta\Phi^T T$
 3. $\mathcal{N}(\Phi(x^{new})\omega_{MAP}, \Phi(x^{new})\Sigma_{MAP}\Phi(x^{new})^T+\beta I)$
 4. $\mathcal{N}(0, \alpha^{-1}\Phi\Phi^T+\beta^{-1}I)$
+
+## Quiz 4
+
+### Question
+
+For $y = \sigma(\Phi(x) w)$, and $\mathcal{D} = \{[x_1,...,x_N], [t_1, ..., t_N]\}$, where $\sigma(x) = \frac{1}{1+e^{-x}}$.
+1. What is the solution of $w_{ML}$?
+2. What is the solution of $w_{MAP}$ if $w \sim \mathcal{N}(m_0, S_0)$?
+3. What is the predictive distribution if $\mathcal{D}^{new} = \{x^{new}, t^{new}=1\}$?
+4. What is the model evaluation?
+
+### Answer
+
+1. $J(w) = -\sum_{n=1}^N \{t_n \log y_n + (1-t_n) \log(1-y_n)\} \ b = \triangledown J(w) = \sum_{n=1}^N \phi^T(y_n - t_n) \ H = \triangledown \triangledown J(w) = \sum_{n=1}^N y_n(1-y_n) \phi_n^T\phi$ 
+    
+    Because $\sigma$ is not a linear function, there are no explicit solution to find $w_{ML}$. We can use the gradient descent method to find the solution.
+    
+    $w^+ \larr w - H^{-1}b$
+2. $J(w) = -\sum_{n=1}^N \{t_n \log y_n + (1-t_n) \log(1-y_n)\} + \frac{1}{2}(w-m_0)^TS_0^{-1}(w-m_0)$
+    
+    Therefore, $b = \triangledown J(w) = \sum_{n=1}^N \phi^T(y_n - t_n) + S_0^{-1}(w - m_0) $ and $H = \triangledown \triangledown J(w) =\sum_{n=1}^N y_n(1-y_n) \phi_n^T\phi + S_0^{-1}$
+
+3. $p(t^{new}=1 | x^{new}, \mathcal{D}) = \int p(t^{new}=1|w)p(w|\mathcal{D})dw = \int \sigma(\phi^{new} w) \mathcal{N}(w_{MAP}, H^{-1})dw$
+
+    $\sigma(\kappa(\sigma_a^2)\mu_a)$
+
+4. $\sum_{n=1}^N[t_n \ln y_n + (1 - t_n) \ln (1 - y_n)]_{MAP} - \frac{1}{2}(w_{MAP} - m_0)^T S_0^{-1}(w_{MAP} - m_0) + \frac{M}{2} \ln 2\pi - \frac{1}{2}\ln |H|_{MAP}$
