@@ -1,0 +1,3 @@
+[submodule "themes/keep"]
+	path = themes/keep
+	url = git@github.com:Jaredanwolfgang/hexo-theme-keep.git
