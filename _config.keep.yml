@@ -37,8 +37,8 @@ menu:
   home: /                       || fa-solid fa-home
   archives: /archives           || fa-solid fa-box-archive
   tags: /tags                   || fa-solid fa-tags
-  # categories: /categories     # || fa-solid fa-layer-group
-  # links: /links               # || fa-solid fa-link
+  categories: /categories       || fa-solid fa-layer-group
+  links: /links                 || fa-solid fa-link
   # photos: /photos             # || fa-solid fa-image
   # tools: /tools               # || fa-solid fa-tools
   about: /about                 || fa-solid fa-user-graduate
@@ -91,7 +91,7 @@ social_contact:
 # ---------------------------------------------------------------------------------------
 scroll:
   # Show progress bar in top when page scroll
-  progress_bar: false  # Option values: true | false
+  progress_bar: true  # Option values: true | false
 
   # Show percent when page scroll
   percent: false       # Option values: true | false
@@ -108,10 +108,10 @@ home:
   announcement:
 
   # Show category in home page post block
-  category: false           # Option values: true | false
+  category: true          # Option values: true | false
 
   # Show tags in home page post block
-  tag: false                # Option values: true | false
+  tag: true               # Option values: true | false
 
   # Set the datetime type of home page post block
   post_datetime: updated    # Option values: updated | created
@@ -127,7 +127,7 @@ post:
 
     # If true, show Lv1, Lv2, Lv3 ...
     # If false, show custom badge
-    level_badge: true    # Option values: true | false
+    level_badge: false    # Option values: true | false
 
     # Custom badge array, You can be fill one or more item
     custom_badge: ["One", "Two", "Three"]
@@ -136,8 +136,8 @@ post:
   # Depend on Hexo Plugin: hexo-wordcount (`npm install hexo-wordcount`)
   # See: https://github.com/willin/hexo-wordcount
   word_count:
-    wordcount: false     # Word count, one post. Option values: true | false
-    min2read: false      # Time to read, one post. Option values: true | false
+    wordcount: true     # Word count, one post. Option values: true | false
+    min2read: true      # Time to read, one post. Option values: true | false
 
   # Post datetime
   datetime_format: "YYYY-MM-DD HH:mm:ss"  # Datetime format. e.g. "YYYY-MM-DD HH:mm:ss"
@@ -171,7 +171,7 @@ code_block:
 # Docs: https://keep-docs.xpoet.cn/basis/configuration-guide/toc.html
 # ---------------------------------------------------------------------------------------
 toc:
-  enable: false      # Option values: true | false
+  enable: true      # Option values: true | false
 
   # Automatically add list number to toc
   number: false      # Option values: true | false
@@ -183,7 +183,7 @@ toc:
   init_open: true    # Option values: true | false
 
   # TOC layout on post page
-  layout: right      # Option values: left | right
+  layout: left      # Option values: left | right
 
 
 # ---------------------------------------------------------------------------------------
@@ -310,11 +310,11 @@ pjax:
 # Docs: https://keep-docs.xpoet.cn/basis/configuration-guide/footer.html
 # ---------------------------------------------------------------------------------------
 footer:
-  since: 2020            # The starting year of your website, Can be null
+  since: 2024            # The starting year of your website, Can be null
   word_count: false      # Option values: true | false
 
   site_deploy:
-    enable: false        # Option values: true | false
+    enable: true        # Option values: true | false
     provider: github     # Option values: github | vercel | netlify | cloudflare | gitee | aliyun | tencent_cloud | upyun
     url:                 # Your deployment provider url, Can be null
 

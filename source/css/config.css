@@ -5,4 +5,7 @@
     --first-screen-header-font-color-dark: #fff;
     --first-screen-font-family: 'Harry P';
     --first-screen-font-size: 60px;
+    --box-border-radius: 20px;
+    --header-title-font-family: 'Harry P';
+    --home-post-hover-scale: 1.025;
 }
