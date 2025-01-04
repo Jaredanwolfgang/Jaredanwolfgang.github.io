@@ -9,3 +9,28 @@
     --header-title-font-family: 'Harry P';
     --home-post-hover-scale: 1.025;
 }
+
+.badge {
+    display: inline-flex;
+    padding: 5px 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #007bff;
+    border-radius: 12px;
+    margin-left: 8px; /* Optional spacing between text and badge */
+    vertical-align: middle; /* Aligns with the text baseline */
+}
+
+.heading-with-badge {
+    margin: 12;
+    display: inline-flex;
+    align-items: center; /* Vertically center content */
+}
+
+.badge img {
+    width: 20px;  /* Set the image size */
+    height: 20px; /* Set the image size */
+    margin-left: 5px;
+    pointer-events: none;
+}

@@ -4,37 +4,19 @@ date: 2024-11-29 12:03:00
 page_cover: /images/harry.jpg
 page_cover_height: 250
 ---
-# About me 😋
+<h2 class="heading-with-badge"> About Me 😋
+    <div class="divider">
+        <a class="badge" style="font-size: 12px; font-weight: normal; background-color:rgb(255, 145, 105);" href="/2025/01/04/projects_hub/">Computer Science Major</a>
+        <a class="badge" style="font-size: 12px; font-weight: normal; background-color:rgb(255, 206, 11);" href="">A Hufflepuff</a>
+        <a class="badge" style="font-size: 12px; font-weight: normal; background-color:rgb(71, 102, 255);" href="">A Sports Enthusiast</a>
+        <a class="badge" style="font-size: 12px; font-weight: normal; background-color:rgb(213, 136, 255);" href="">A Music Lover</a>
+        <a class="badge" style="font-size: 12px; font-weight: normal; background-color:rgb(89, 116, 93);" href="">Language Engager</a>
+    </div>
+</h2>
 
 <p align="left">
-Hi, I am Yicheng Xiao, an undergraduate students studying Computer Science at Southern University of Science and Technology. This blog is used to document some of my thoughts, some of my notes and some of my daily routines...
+Hi, I am Yicheng Xiao, an undergraduate students studying Computer Science at Southern University of Science and Technology. This blog is used to document some of my thoughts, some of my notes and some of my daily routines... To further explain my name, I usually refer myself as Jaredanjerry or Jaredanwolfgang. Jaredan is the name I use with my personal social media accounts. It comes from a very interesting misunderstanding that I did not know Jared as a proper English name before and called of my friends who name is Jared as Jerry the whole summer. My English name is Jerry and my German name I choose for myself is Wolfgang, so I combined them together and got Jaredanjerry and Jaredanwolfgang. You can call either way by using Jaredan, Jerry or Wolfgang.
 </p>
 
-### A startup computer science student
 
-<p align="left">
-I am currently studying in SUSTech. I am interested in a lot of interesting topics including distributed machine learning, rust compilers and high performance computing.
-</p>
 
-### A Harry Potter fans
-
-<p align="left">
-I am a huge Harry Potter fans... and am honored to be sorted into the house of Hufflepuff! We are kind and always stay true to our friends. 
-</p>
-
-### A Sports Enthusiast: Frisbee, Rock Climbing and Gym Workout
-
-<p align="left">
-I enjoy playing Ultimate Frisbee in my spare time, usually acting as a cutter and trying to qualify myself for the handler position. I also enjoy rock climbing and gym workout.
-</p>
-
-### A Music Lover
-
-<p align="left">
-I enjoy a wide spectrum of music, in different genres and languages. I might prefer soft music while studying and thinking, but I am also a fan of pop music and R&B.
-</p>
-
-### Language Engager
-
-<p align="left">
-I enjoy learning different languages (Computer Language included). I am currently learning Rust and Python, also I have a great interest in learning French and Korean currently. (Previously, I have learned English and German.)
