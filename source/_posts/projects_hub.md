@@ -135,11 +135,137 @@ When our class begins, we are required to find our teammates. It is not uncommon
 </h2>
 
 > Contributors:
-> 1. Chen Ben
+> 1. Ben Chen
 > 2. Yicheng Xiao
-> 3. Zhujia Run
+> 3. Jiarun Zhu
 
-SPL(SUSTech Programming Language) Compiler in Rust. Current implementation mainly focuses on Compiler frontend, including Lexer, Parser, AST, Type Checker and LLVM IR generation. The backend we use is LLVM. 
+SPL(SUSTech Programming Language) Compiler in Rust. Current implementation mainly focuses on Compiler frontend, including Lexer, Parser, AST, Type Checker and LLVM IR generation. The backend we use is LLVM. The grammar supported is as follows:
+
+```plaintext
+// Program Structure
+Program -> ProgramPart*
+ProgramPart -> Stmt | FuncDec
+
+// Declarations and Definitions
+ParaDecs -> Comma<ParaDec>
+StructDecs -> Comma<StructDec>
+ArrayDecs -> Comma<CompExpr>
+FieldsDec -> VarDef ";"?
+           | FieldsDec VarDef ";"?
+FuncDec -> Specifier Identifier "(" ParaDecs? ")" "{" Body "}"
+DimDecs -> "[" CompExpr "]"
+         | "[" CompExpr "]" DimDecs
+FuncCall -> Identifier "(" ArgList? ")"
+ArgList -> CompExpr | CompExpr "," ArgList
+Comma<T> -> T | T "," Comma<T>
+
+// Statements
+Stmt -> "struct" Identifier "{" FieldsDec "}" ";"?
+      | "include" "string"
+      | Specifier VarDecs ";"
+      | "if" "(" CondExpr ")" Expr
+      | "if" "(" CondExpr ")" Expr "else" Expr
+      | "while" "(" CondExpr ")" "{" Body "}"
+      | "for" "(" VarManagement? ";" CondExpr? ";" VarManagement? ")" "{" Body "}"
+      | VarManagement ";"
+      | FuncCall ";"
+      | "break" ";"
+      | "continue" ";"
+      | "return" CompExpr? ";"
+      | "{" Body "}"
+
+// Body
+Body -> Expr*
+
+// Expression
+Expr -> OpenExpr | CloseExpr
+OpenExpr -> "if" "(" CondExpr ")" Expr
+          | "if" "(" CondExpr ")" Expr "else" OpenExpr
+CloseExpr -> "if" "(" CondExpr ")" Expr "else" CloseExpr
+           | WhileExpr
+           | ForExpr
+           | FuncCall
+           | VarManagement ";"
+           | "break" ";"
+           | "continue" ";"
+           | "return" CompExpr? ";"
+           | "{" Body "}"
+
+// While Expression
+WhileExpr -> "while" "(" CondExpr ")" "{" Body "}"
+
+// For Expression
+ForExpr -> "for" "(" VarManagement? ";" CondExpr? ";" VarManagement? ")" "{" Body "}"
+
+// Variable Management
+VarManagement -> VarDef
+               | VarDecs
+               | Identifier DimDecs? "++"
+               | Identifier DimDecs? "--"
+
+// Variable Declarations and Definitions
+VarDef -> Specifier Identifier DimDecs? "=" "{" StructDecs "}"
+        | Specifier VarDecs
+VarDecs -> VarDec | VarDec "," VarDecs
+VarDec -> Identifier DimDecs?
+        | Identifier DimDecs? "=" CompExpr
+        | StructRef "=" CompExpr
+        | Identifier DimDecs? "=" "{" ArrayDecs "}"
+StructRef -> StructRef "." Identifier DimDecs?
+           | Identifier DimDecs? "." Identifier DimDecs?
+
+// Conditional Expression
+CondExpr -> CondTerm
+          | "!" CondExpr
+          | CompExpr ">" CompExpr
+          | CompExpr "<" CompExpr
+          | CompExpr ">=" CompExpr
+          | CompExpr "<=" CompExpr
+          | CompExpr "==" CompExpr
+          | CompExpr "!=" CompExpr
+          | CondExpr "&&" CondExpr
+          | CondExpr "||" CondExpr
+CondTerm -> "bool"
+          | "(" CondExpr ")"
+
+// Computation Expression
+CompExpr -> Term
+          | CompExpr "%" CompExpr
+          | CompExpr "*" CompExpr
+          | CompExpr "/" CompExpr
+          | CompExpr "+" CompExpr
+          | CompExpr "-" CompExpr
+          | CompExpr "&" CompExpr
+          | CompExpr "|" CompExpr
+          | CompExpr "^" CompExpr
+
+// Term
+Term -> "(" CompExpr ")"
+      | Identifier DimDecs?
+      | "+"? "int"
+      | "-" "int"
+      | "+"? "float"
+      | "-" "float"
+      | "char"
+      | "string"
+      | Identifier "(" ArgList? ")"
+      | StructRef
+      | "&" Identifier
+      | "*" Identifier
+
+// Type Specifiers
+Specifier -> "typeint"
+           | "typeint" "*"
+           | "typefloat"
+           | "typefloat" "*"
+           | "typechar"
+           | "typechar" "*"
+           | "typestr"
+           | "void"
+           | "struct" Identifier
+```
+
+Based on the tools we use `Logos` and `lalrpop`, we have realized self-defined error-recovery mechanism that can detect lexical errors and syntax errors. In the analyzer module, we have conducted type checking and semantic analysis. As the last step, we use `inkwell` to generate LLVM IR code.
 
 <h2 class="heading-with-badge">CS329 When AL and DA meets at OD 
     <span class="badge" style="background-color:rgb(255, 231, 135); color: rgb(0,0,0)">Python

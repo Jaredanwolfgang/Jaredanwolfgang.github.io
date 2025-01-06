@@ -7,6 +7,10 @@ toc: true
 mathjax: true
 ---
 
+Pattern Recognition and Machine Learning (PRML) focuses on traditional machine learning algorithms and their probabilistic interpretations. 
+
+<!--more-->
+
 ## Clustering
 
 ### K-means (Hard Clustering)
@@ -200,6 +204,3 @@ $p(x \| z, \phi) = \prod_{i=1}^D \prod_{k=1}^K \mu_{i k}^{x_i z_k}$ | $$ \mu_{i 
   - **Initialization**: $\ \beta_N(z_N) = 1\ $
   - **Recursion**: $\ \beta_n(z_n) = \sum_{z_{n+1}} p(x_{n+1} | z_{n+1}, \phi) p(z_{n+1} | z_n, A) \beta_{n+1}(z_{n+1})\ $
   - **Termination**: $\ p(x | \theta) = \sum_{z_1} \pi(z_1) p(x_1 | z_1, \phi) \beta_1(z_1)\ $
-
-
-To be continued...
