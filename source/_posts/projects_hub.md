@@ -282,7 +282,7 @@ The full name stands for "When Active Learning and Data Augmentation meets at Ob
 > 1. Shengli Zhou
 > 2. Yicheng Xiao
 
-In this project, we studied the effect of Active Learning and Data Augmentation on Object Detection. We use infromation entropy and information gain as the criterion for Active Learning. Also, we chose different levels of Data Augmentation techniques. We used RTDETR-v2 as our pre-trained model and train it on the Kitti 3D Object Detection 2017 dataset. Through our finetuning process, we observed a correlation between the selection strategy and the according data augmentation strategy that can probably give us better understanding of the learning process and guide us what data should we choose to improve the performance. <a href="https://github.com/Jaredanwolfgang/Jaredanwolfgang.github.io/tree/main/public/Machine_Learning_Project_Final_Report.pdf" target="_blank">Check out the report here!</a>
+In this project, we studied the effect of Active Learning and Data Augmentation on Object Detection. We use infromation entropy and information gain as the criterion for Active Learning. Also, we chose different levels of Data Augmentation techniques. We used RTDETR-v2 as our pre-trained model and train it on the Kitti 3D Object Detection 2017 dataset. Through our finetuning process, we observed a correlation between the selection strategy and the according data augmentation strategy that can probably give us better understanding of the learning process and guide us what data should we choose to improve the performance. <a href="https://github.com/Jaredanwolfgang/Jaredanwolfgang.github.io/tree/main/source/report/Machine_Learning_Project_Final_Report.pdf" target="_blank">Check out the report here!</a>
 
 <img src="/images/project_hubs/AL_process_combined.png" alt="AL_DA_OD" style="zoom:50%;" />
 
@@ -294,7 +294,7 @@ In this project, we studied the effect of Active Learning and Data Augmentation 
     </span>
 </h2>
 
-This is a simple implementation of a VirtIO crypto device. The device is a PCI device that can be used to encrypt and decrypt data. The device is implemented in QEMU. <a href="https://github.com/Jaredanwolfgang/Jaredanwolfgang.github.io/tree/main/public/CS334_VirtIO_Project_Report.pdf" target="_blank">Check out the report here!</a>
+This is a simple implementation of a VirtIO crypto device. The device is a PCI device that can be used to encrypt and decrypt data. The device is implemented in QEMU. <a href="https://github.com/Jaredanwolfgang/Jaredanwolfgang.github.io/tree/main/source/report/CS334_VirtIO_Project_Report.pdf" target="_blank">Check out the report here!</a>
 
 
 We have implemented the following features:
