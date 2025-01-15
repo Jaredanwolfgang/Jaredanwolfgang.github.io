@@ -294,6 +294,11 @@ In this project, we studied the effect of Active Learning and Data Augmentation 
     </span>
 </h2>
 
+> Contributors:
+> 1. Jiarun Zhu
+> 2. Shengli Zhou
+> 3. Yicheng Xiao
+
 This is a simple implementation of a VirtIO crypto device. The device is a PCI device that can be used to encrypt and decrypt data. The device is implemented in QEMU. <a href="https://github.com/Jaredanwolfgang/Jaredanwolfgang.github.io/tree/main/source/report/CS334_VirtIO_Project_Report.pdf" target="_blank">Check out the report here!</a>
 
 
