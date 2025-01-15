@@ -269,15 +269,44 @@ Based on the tools we use `Logos` and `lalrpop`, we have realized self-defined e
 
 <h2 class="heading-with-badge">CS329 When AL and DA meets at OD 
     <span class="badge" style="background-color:rgb(255, 231, 135); color: rgb(0,0,0)">Python
+        <a href="https://github.com/Jaredanwolfgang/CS329_Machine_Learning_Project">
+            <img alt="github" src="/images/logos/github-mark.svg" width="30" height="30">
+        </a>
     </span>
 </h2>
 {% note primary %}
 The full name stands for "When Active Learning and Data Augmentation meets at Object Detection".
 {% endnote %}
 
+> Contributors:
+> 1. Shengli Zhou
+> 2. Yicheng Xiao
+
+In this project, we studied the effect of Active Learning and Data Augmentation on Object Detection. We use infromation entropy and information gain as the criterion for Active Learning. Also, we chose different levels of Data Augmentation techniques. We used RTDETR-v2 as our pre-trained model and train it on the Kitti 3D Object Detection 2017 dataset. Through our finetuning process, we observed a correlation between the selection strategy and the according data augmentation strategy that can probably give us better understanding of the learning process and guide us what data should we choose to improve the performance.
+
+<img src="/images/project_hubs/AL_process_combined.png" alt="AL_DA_OD" style="zoom:50%;" />
+
+
 <h2 class="heading-with-badge">CS334 VirtIO for crypto device on Asterinas 
-    <span class="badge" style="background-color:rgb(71, 63, 63);">Rust</span>
+    <span class="badge" style="background-color:rgb(71, 63, 63);">Rust
+        <a href="https://github.com/Jaredanwolfgang/CS334_Operating_System_VirtIO">
+            <img alt="github" src="/images/logos/github-mark-white.svg" width="30" height="30">
+    </span>
 </h2>
+
+This is a simple implementation of a VirtIO crypto device. The device is a PCI device that can be used to encrypt and decrypt data. The device is implemented in QEMU. <a href="https://github.com/Jaredanwolfgang/CS334_Operating_System_VirtIO/tree/main/public/CS334_VirtIO_Project_Report.pdf" target="_blank">Check out the report here!</a>
+
+
+We have implemented the following features:
+- [x] Symmetric Algorithm
+    - [x] Cipher (Encrypt/Decrypt)
+    - [x] Chain Algorithm
+        - [x] Hash Algorithm (Encrypt/Decrypt)
+        - [ ] MAC Algorithm (Encrypt/Decrypt)
+- [x] AKCIPHER Algorithm (Encrypt/Decrypt/Sign/Verify)
+- [x] Writing Test Cases
+- [x] Asynchronous Request
+- [x] User Call
 
 <h2 class="heading-with-badge">Academic Record
     <span class="badge" style="background-color:rgb(255, 128, 0);">SUSTech</span>
@@ -298,4 +327,7 @@ The full name stands for "When Active Learning and Data Augmentation meets at Ob
 | **CS217** | **Data Structures and Algorithms Analysis (H)** | 2023 Fall | Pietro Simone Oliveto | 97 |
 | **CS305** | **Computer Networks** | 2024 Spring | Zhuozhao Li | 92 |
 | **CS311** | **Artificial Intelligence (H)** | 2024 Spring | Bo Yuan | 83 |
+| **CS323** | **Compiler** | 2024 Fall | Yepang Liu | 95 |
+| **CS329** | **Machine Learning** | 2024 Fall | Qi Hao |  |
+| **CS334** | **Operating System** | 2024 Fall | Yiqian Zhang |  |
 | **MA212** | **Probability and Statistics** | 2023 Fall | Yiwei Zhang | 95 |
