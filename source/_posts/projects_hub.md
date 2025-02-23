@@ -150,6 +150,12 @@ ProgramPart -> Stmt | FuncDec
 ParaDecs -> Comma<ParaDec>
 StructDecs -> Comma<StructDec>
 ArrayDecs -> Comma<CompExpr>
+ArrayDecs -> Comma<CompExpr>
+ArrayDecs -> Comma<CompExpr>
+ArrayDecs -> Comma<CompExpr>
+ArrayDecs -> Comma<CompExpr>
+ArrayDecs -> Comma<CompExpr>
+ArrayDecs -> Comma<CompExpr>vvvvv c
 FieldsDec -> VarDef ";"?
            | FieldsDec VarDef ";"?
 FuncDec -> Specifier Identifier "(" ParaDecs? ")" "{" Body "}"
@@ -333,6 +339,6 @@ We have implemented the following features:
 | **CS305** | **Computer Networks** | 2024 Spring | Zhuozhao Li | 92 |
 | **CS311** | **Artificial Intelligence (H)** | 2024 Spring | Bo Yuan | 83 |
 | **CS323** | **Compiler** | 2024 Fall | Yepang Liu | 95 |
-| **CS329** | **Machine Learning** | 2024 Fall | Qi Hao |  |
-| **CS334** | **Operating System** | 2024 Fall | Yiqian Zhang |  |
+| **CS329** | **Machine Learning** | 2024 Fall | Qi Hao | 97 |
+| **CS334** | **Operating System** | 2024 Fall | Yiqian Zhang | 98 |
 | **MA212** | **Probability and Statistics** | 2023 Fall | Yiwei Zhang | 95 |
