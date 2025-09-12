@@ -172,6 +172,8 @@ The result of the emir image is shown below:
   <div style="background: #f8f8f8; border-radius: 12px; box-shadow: 0 2px 8px #0001; padding: 16px; text-align: center; transition: transform 0.2s; cursor: pointer;">
     <img src="/images/compsci180/proj_1/emir.jpg" alt="Emir" style="width: 100%; border-radius: 8px; margin-bottom: 12px; aspect-ratio: 1/1; object-fit: cover;">
     <div style="font-size: 1.1em; color: #333; font-weight: 600;">Emir - Result</div>
+    <div style="font-size: 0.9em; color: #666;">Green shift: (49, 23), Red shift: (106, 40)</div>
+    <div style="font-size: 0.9em; color: #666;">Time taken: 8.15 seconds</div>
   </div>
 </div>
 
