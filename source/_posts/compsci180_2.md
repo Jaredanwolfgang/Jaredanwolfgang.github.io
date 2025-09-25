@@ -3,7 +3,6 @@ title: "[COMPSCI 180] Filters and Frequencies"
 date: 2025-09-24 10:39:00
 tags: [COMPSCI_180]
 categories: COMPSCI_180
-mathjax: true
 ---
 
 # Overview
@@ -190,3 +189,93 @@ To showcase the whole process of hybrid image, I use the Voldemort picture to sh
 </div>
 
 ## 2.3 Gaussian and Laplacian Stacks
+
+In this part, I try to implement the Gaussian and Laplacian stacks because it does not require upsampling and downsampling and it will be easier to calculate the original image from the Laplacian stacks using the stacks.
+
+This is the result of the Gaussian and Laplacian stacks for the apple image.
+
+<div align="center">
+    <img src="/images/compsci180/proj_2/2_3_apple.png" alt="Gaussian and Laplacian" width="80%" />
+</div>
+
+This is the result of the Gaussian and Laplacian stacks for the orange image.
+
+<div align="center">
+    <img src="/images/compsci180/proj_2/2_3_orange.png" alt="Gaussian and Laplacian" width="80%" />
+</div>
+
+This is the result of the Gaussian stacks for the mask image.
+
+<div align="center">
+    <img src="/images/compsci180/proj_2/2_3_mask.png" alt="Gaussian and Laplacian" width="80%" />
+</div>
+
+And here is where I use the images from the Gaussian and Laplacian stacks to form the 'oraple' image.
+
+<div align="center">
+    <img src="/images/compsci180/proj_2/2_3_oraple.png" alt="Gaussian and Laplacian" width="80%" />
+</div>
+
+## 2.4 Multiresolution Blending
+
+The blending process can be viewed as a multi-resolution blending process. Here are the main steps I take:
+
+1. Prepare two images and a mask. (These should be of the same size.)
+2. Compute the Gaussian and Laplacian stacks for two images. Compute the mask gaussian stacks.
+3. Blend the Laplacian stacks using: $L_{\text{hybrid}}[i] = L_{\text{picture 1}}[i] * mask[i] + L_{\text{picture 2}}[i] * (1 - mask[i])$
+4. Blend the lowest level of the Gaussian stacks using: $G_{\text{hybrid}}[0] = G_{\text{picture 1}}[0] * mask[0] + G_{\text{picture 2}}[0] * (1 - mask[0])$
+5. Add up the lowest level of the Gaussian stacks and all levels of the Laplacian stacks to get the final image.
+
+The result is quite good!
+
+{% note primary %}
+I have to note that showing the result requires normalization as the laplacian results have negative values. So the color in the Laplacian results are not the same as in the gaussian results.
+{% endnote %}
+
+<div align="center">
+    <div style="border: 2px solid #ddd; border-radius: 8px; padding: 15px; margin: 20px 0; background-color: #f9f9f9; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <img src="/images/compsci180/proj_2/2_4_oraple.png" alt="Blending Results" width="50%" style="border-radius: 4px;" />
+        <p style="margin-top: 10px; font-style: italic; color: #666; font-size: 14px;">
+            <strong>Apple and Orange Multiresolution Blending Result</strong> 
+        </p>
+    </div>
+</div>
+
+And too I try to use the blending machenism to bridge the reality and the anime I like: 
+
+<div align="center">
+    <img src="/images/compsci180/proj_2/2_4_your_name_process.png" alt="Blending Results" width="80%" />
+</div>
+
+And here is the result of the blending:
+
+<div align="center">
+    <div style="border: 2px solid #ddd; border-radius: 8px; padding: 15px; margin: 20px 0; background-color: #f9f9f9; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <img src="/images/compsci180/proj_2/2_4_your_name.png" alt="Blending Results" width="50%" style="border-radius: 4px;" />
+        <p style="margin-top: 10px; font-style: italic; color: #666; font-size: 14px;">
+            <strong>Reality and Anime: Your Name Multiresolution Blending Result</strong> 
+        </p>
+    </div>
+</div>
+
+Here is another blending result using the main character inside the anime Your Name. (In this anime, Takiku and Mizuhan are the main characters and they go through a magic process of exchange their bodies.)
+
+
+<div align="center">
+    <img src="/images/compsci180/proj_2/2_4_mizuhan_takiku_process.png" alt="Blending Results" width="80%" />
+</div>
+
+And here is the result of the blending:
+
+<div align="center">
+    <div style="border: 2px solid #ddd; border-radius: 8px; padding: 15px; margin: 20px 0; background-color: #f9f9f9; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <img src="/images/compsci180/proj_2/2_4_mizuhan_takiku.png" alt="Blending Results" width="50%" style="border-radius: 4px;" />
+        <p style="margin-top: 10px; font-style: italic; color: #666; font-size: 14px;">
+            <strong>Mizuhan and Takiku Blending Result</strong> 
+        </p>
+    </div>
+</div>
+
+# Conclusion
+
+After learning all the techniques in Computer Vision, you can actually do some cool stuff with them! Including realize some of the ideas you have been thinking about for a long time! Merging reality and anime, transcending time and space, these are the power of Computer Vision!
