@@ -126,3 +126,67 @@ As we can see from the results, both methods can help remove the noise. These me
 
 ## 2.1 Image Sharpening
 
+The image sharpening is rather simple after all the work we have done. We can simply use the gaussian kernel to get the low-pass filtered image and then subtract it from the original image to get the high-pass filtered image. Adding the high-pass filtered image to the original image will give us the sharpened image. The following are the results of using `taj.jpg` and `kolkata.jpg`.
+
+<div align="center">
+    <img src="/images/compsci180/proj_2/2_1_taj_1.png" alt="Results 1" width="80%" />
+    <img src="/images/compsci180/proj_2/2_1_taj_2.png" alt="Results 2" width="80%" />
+    <img src="/images/compsci180/proj_2/2_1_kolkata_1.png" alt="Results 1" width="80%" />
+    <img src="/images/compsci180/proj_2/2_1_kolkata_2.png" alt="Results 2" width="80%" />
+</div>
+
+## 2.2 Hybrid Images
+
+This is the most interesting part of the whole project, I get the change to implement some of the ideas I have been thinking about for a long time. Hybrid images are using two images with different frequencies to create a new image. And the first step is to align the two images.
+
+I have tried to use the original code to align but I find that for the example shown (the man and the cat), I cannot get the result I like as the size of the face of the man and the cat are too different. Therefore, I implement another method using 4 dots to align the two images and conduct a transformation to align the two images. This way I can ensure that the size of the face of the man and the cat are the same. (Or at least better than the original alignment method.)
+
+<div align="center">
+    <img src="/images/compsci180/proj_2/2_2_aligned.png" alt="Results 1" width="80%" />
+</div>
+
+Then, the hybrid process is as follows:
+
+1. Calculate the low-pass filtered image of the two images
+2. Calculate the high-pass filtered image of the second image using the calculated low-pass filtered image
+3. Add the high-pass filtered image of the second image to the original image to get the hybrid image
+   
+In this process, it is crucial to choose the right cutoff frequency used in the Gaussian filter. To remove the high-frequency components in the first image, we need to choose a higher cutoff frequency. For the second image, we need to choose a lower cutoff frequency to remove the low-frequency components and leave the high-frequency components.
+
+The choice of the cutoff frequencies is really picture-based and to make the result look good, one has to choose the cutoff frequencies carefully.
+
+<div align="center">
+    <div style="border: 2px solid #ddd; border-radius: 8px; padding: 15px; margin: 20px 0; background-color: #f9f9f9; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <img src="/images/compsci180/proj_2/2_2_hybrid.png" alt="Hybrid Image Results" width="50%" style="border-radius: 4px;" />
+        <p style="margin-top: 10px; font-style: italic; color: #666; font-size: 14px;">
+            <strong>Cutoff frequecies Sigma for the first image: 15, for the second image: 5</strong> 
+        </p>
+    </div>
+</div>
+
+I am always a big fan of tv series and films that contain some kind of hidden characters or double identities with contrast, I think it will be a good time to implement this using hybrid image as you can see different people from near and far. This is a hybrid image of young Tom Riddle and Lord Voldemort.
+
+<div align="center">
+    <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+        <img src="/images/compsci180/proj_2/2_2_voldemort.png" alt="Voldemort" style="max-width: 60%; height: auto;" />
+        <img src="/images/compsci180/proj_2/2_2_voldemort_combine.png" alt="Harry" style="max-width: 30%; height: auto;" />
+    </div>
+</div>
+
+And here is a hybrid image of the spiderman and Tom Holland. 
+
+<div align="center">
+    <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+        <img src="/images/compsci180/proj_2/2_2_spiderman.png" alt="Spiderman" style="max-width: 60%; height: auto;" />
+        <img src="/images/compsci180/proj_2/2_2_spiderman_combine.png" alt="Tom Holland" style="max-width: 30%; height: auto;" />
+    </div>
+</div>
+
+To showcase the whole process of hybrid image, I use the Voldemort picture to show how the frequency domain is like.
+
+<div align="center">
+    <img src="/images/compsci180/proj_2/2_2_voldemort_frequency.png" alt="Voldemort Frequency" width="80%" />
+    <img src="/images/compsci180/proj_2/2_2_voldemort_frequency_combine.png" alt="Voldemort Frequency Combine" width="80%" />
+</div>
+
+## 2.3 Gaussian and Laplacian Stacks
