@@ -24,6 +24,19 @@ After several takes, the pictures took in the main stack library quite fit the r
     <img src="/images/compsci180/proj_3/main_stack.png" alt="Main Stack Library" width="80%" />
 </div>
 
+Also here is another example that I took for the Doe library:
+
+<div align="center">
+    <img src="/images/compsci180/proj_3/doe.png" alt="Doe Library" width="80%" />
+</div>
+
+I really like the dome structure in the Main Stack Library so I also choose it to make the mosaic.
+
+<div align="center">
+    <img src="/images/compsci180/proj_3/dome.png" alt="Main Stack Library" width="80%" />
+</div>
+
+
 # Part A.2: Recover Homographies!
 
 Here we should implement the function `H = computeH(im1_pts,im2_pts)` to compute the homography matrix by using the coordinates of the points in both images.
@@ -127,6 +140,15 @@ Let's have a look at the matching points:
     <img src="/images/compsci180/proj_3/point_matching.png" alt="Matching Points" width="80%" />
 </div>
 
+<div align="center">
+    <img src="/images/compsci180/proj_3/point_matching_doe.png" alt="Matching Points" width="80%" />
+</div>
+
+<div align="center">
+    <img src="/images/compsci180/proj_3/point_matching_dome.png" alt="Matching Points" width="80%" />
+</div>
+
+
 # Part A.3: Warp the Images!
 
 From the above part, we can see that we are getting a good homography matrix, however the images have black vacancies in between because we did not implement the interpolation. In this part, we need to warp the images to align them:
@@ -156,13 +178,30 @@ We first use the rectification process to ensure that our algorithm is actually 
     <img src="/images/compsci180/proj_3/n_transformation.png" alt="Rectification Transformation" width="80%" />
 </div>
 
-After testing out the result, I use both functions on the main stack library images. Here is the result:
+After testing out the result, I use both functions on the main stack library images and the Doe library images. Here is the result:
 
 <div align="center">
     <img src="/images/compsci180/proj_3/warped_main_stack.png" alt="Main Stack Library Warped" width="80%" />
 </div>
 
-Time taken for nearest neighbor method is 18.39 seconds and for bilinear method is 30.15 seconds. As for the image quality, we can see in general both methods can produce a good result. However, if we zoom in on the upper left corner, we can see that using bilinear method can produce a smoother result. (There are these zigzag patterns in the line of the nearest neighbor method.)
+<div align="center">
+    <img src="/images/compsci180/proj_3/warped_doe.png" alt="Doe Library Warped" width="80%" />
+</div>
+
+<div align="center">
+    <img src="/images/compsci180/proj_3/warped_dome.png" alt="Dome Library Warped" width="80%" />
+</div>
+
+| Image | Nearest Neighbor | Bilinear | Point Number |
+| ----- | ---------------- | --------- | ------------ |
+| Main Stack Library | 18.39 seconds | 30.15 seconds | 10 |
+| Doe Library Left | 4.46 seconds | 6.94 seconds | 9 | 
+| Doe Library Right | 2.94 seconds | 4.62 seconds | 10 |
+| Dome Library Left | 2.42 seconds | 3.99 seconds | 10 |
+| Dome Library Right | 2.42 seconds | 3.91 seconds | 9 |
+
+
+The time taken for both method is shown in the table above. We can see that the nearest neighbor method is usually faster than the bilinear method. As for the image quality, we can see in general both methods can produce a good result. However, if we zoom in on the upper left corner, we can see that using bilinear method can produce a smoother result. (There are these zigzag patterns in the line of the nearest neighbor method.)
 
 # Part A.4: Blend the Images into a Mosaic
 
@@ -179,6 +218,37 @@ There is one thing that I need to stress that the size of the two original image
 
 Here in this part, I use the Laplacian blending to blend the images together. However, usually the transformed images are big in size, therefore calculating the whole images will be very time-consuming. I try to calculate the overlap part of the original images and the warped images and then only blend the overlap part. This helps accelerate the process.
 
+Therefore the whole 2-image blending process can be summarized as:
+
+1. **Warp & Align**
+   - Warp `image_homo` to align with `image_ref` using homography `H`
+   - Calculate alignment info: shifts, final canvas size, and overlap mask region
+
+2. **Extract Overlap Region**
+   - Extract the overlapping pixels from both the warped image and reference image
+   - Create a binary blend mask (left half = 1, right half = 0)
+
+3. **Build Pyramids**
+   - Create **Laplacian stacks** for each RGB channel of both overlap regions (multi-resolution frequency decomposition)
+   - Create **Gaussian stack** of the blend mask (smooth transition weights)
+
+4. **Stack RGB Channels**
+   - Combine R, G, B Laplacian stacks into color pyramids
+
+5. **Blend at Each Pyramid Level**
+   - At each frequency level: $blended = warped \times mask + reference \times (1 - mask)$
+   - This blends high frequencies sharply and low frequencies smoothly
+
+6. **Reconstruct Final Blend**
+   - Collapse the blended pyramid: start from coarsest level, add each finer level
+   - Normalize the result
+
+7. **Compose Final Panorama**
+   - For each pixel in the final canvas:
+     - If in overlap region: use blended result (seamless transition)
+     - Else if in reference image: use reference directly
+     - Else if in warped image: use warped directly
+  
 Here is the Laplacian stack of the warped images:
 
 <div align="center">
@@ -197,10 +267,29 @@ The gaussian stack for the mask:
     <img src="/images/compsci180/proj_3/stack_mask.png" alt="Gaussian Stack for mask" width="80%" />
 </div>
 
-And here is the result of the blending:
+And here is the result of the blending for the main stack library:
 
 <div align="center">
-    <img src="/images/compsci180/proj_3/blending_result.png" alt="Blending Result" width="80%" />
+    <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+        <img src="/images/compsci180/proj_3/library_0.jpg" alt="Left" style="max-width: 30%; height: auto;" />
+        <img src="/images/compsci180/proj_3/library_1.jpg" alt="Right" style="max-width: 30%; height: auto;" />
+        <img src="/images/compsci180/proj_3/blending_result.png" alt="Tom Holland" style="max-width: 30%; height: auto;" />
+    </div>
 </div>
 
-Although there are still this inconsistencies on the color and the size, the result is still quite good.
+The blending process for three images is basically the same as the two images. We need to warp the left and the right images to the middle image and then blend them together. Here is the result for the Doe library:
+
+<div align="center">
+    <img src="/images/compsci180/proj_3/doe.png" alt="Doe Library" width="80%" />
+    <img src="/images/compsci180/proj_3/doe_blending_result.png" alt="Doe Library" width="80%" />
+</div>
+
+Here is the result for the dome of the Main Stack Library:
+
+<div align="center">
+    <img src="/images/compsci180/proj_3/dome.png" alt="Dome Library" width="80%" />
+    <img src="/images/compsci180/proj_3/dome_blending_result.png" alt="Dome Library" width="80%" />
+</div>
+
+Although there are still this inconsistencies on the color and the size, the results are still quite good.
+

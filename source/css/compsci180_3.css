@@ -1,0 +1,106 @@
+.blend-animation-container {
+    position: relative;
+    width: 80%;
+    margin: 20px auto;
+    cursor: pointer;
+    user-select: none;
+}
+
+.blend-stage {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio, adjust as needed */
+    overflow: hidden;
+    background: #f0f0f0;
+    border-radius: 8px;
+}
+
+.blend-image {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 100%;
+    width: auto;
+    max-width: 50%;
+    object-fit: contain;
+    transition: all 1.5s ease-in-out;
+}
+
+.library-0 {
+    left: 5%;
+    opacity: 1;
+}
+
+.library-1 {
+    right: 5%;
+    opacity: 1;
+}
+
+.blending-result {
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    max-width: 90%;
+    pointer-events: none;
+}
+
+/* Animation states */
+.blend-stage.animating .library-0 {
+    left: 25%;
+    transform: translateY(-50%) scale(0.95);
+}
+
+.blend-stage.animating .library-1 {
+    right: 25%;
+    transform: translateY(-50%) scale(0.95);
+}
+
+.blend-stage.merged .library-0,
+.blend-stage.merged .library-1 {
+    opacity: 0;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.blend-stage.merged .blending-result {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.blend-instructions {
+    text-align: center;
+    margin-top: 15px;
+    padding: 10px;
+    background: #e3f2fd;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #1976d2;
+    transition: opacity 0.3s;
+}
+
+.blend-instructions.hidden {
+    opacity: 0;
+}
+
+.reset-button {
+    display: block;
+    margin: 15px auto;
+    padding: 10px 20px;
+    background: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.reset-button.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.reset-button:hover {
+    background: #1565c0;
+}

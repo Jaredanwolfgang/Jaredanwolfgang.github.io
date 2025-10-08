@@ -339,12 +339,13 @@ inject:
   css:
     - /css/config.css
     - /css/harryp.css
+    - /css/compsci180_3.css
     # e.g.
     # - /css/custom-1.css
     # - /css/custom-2.css
     # - ...
   js:
-    - 
+    - /js/compsci180_3.js
     # e.g.
     # - /js/custom-1.js
     # - /js/custom-2.js
