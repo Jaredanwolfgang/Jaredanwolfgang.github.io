@@ -273,7 +273,7 @@ And here is the result of the blending for the main stack library:
     <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
         <img src="/images/compsci180/proj_3/library_0.jpg" alt="Left" style="max-width: 30%; height: auto;" />
         <img src="/images/compsci180/proj_3/library_1.jpg" alt="Right" style="max-width: 30%; height: auto;" />
-        <img src="/images/compsci180/proj_3/blending_result.png" alt="Tom Holland" style="max-width: 30%; height: auto;" />
+        <img src="/images/compsci180/proj_3/library_blending_result.png" alt="Tom Holland" style="max-width: 30%; height: auto;" />
     </div>
 </div>
 
@@ -293,3 +293,519 @@ Here is the result for the dome of the Main Stack Library:
 
 Although there are still this inconsistencies on the color and the size, the results are still quite good.
 
+# Part B.1: Harris Corner Detection
+
+Here we are trying to first use Harris Corner Detection to detect the corners of the image and then use Adaptive Non-Maximal Suppression (ANMS)to select some of the interest points. The logic of using ANMS is that interest points are suppressed based on the corner strength $f_{HM}$ , and only those that are a maximum in a neighbourhood of radius $r$ pixels are retained. Therefore the algorithm is as follows:
+
+$$
+r_i = \min_{j} |x_i - x_j|, \text{s.t. } f(x_i) < c_{robust} f(x_j), x_j \in I
+$$
+
+Here is the original image, the corner detection result and the ANMS result (by selecting the top 500 points):
+
+<style>
+.image-flow-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+
+.image-flow-container.vertical {
+    flex-direction: column;
+    gap: 15px;
+}
+
+.image-flow-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 30%;
+    flex: 1;
+    min-width: 200px;
+}
+
+.image-flow-container.vertical .image-flow-item {
+    max-width: 90%;
+}
+
+.image-flow-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+}
+
+.image-flow-item .step-label {
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.flow-arrow {
+    font-size: 24px;
+    color: #666;
+    margin: 0 10px;
+    align-self: center;
+}
+
+.image-flow-container.vertical .flow-arrow {
+    transform: rotate(90deg);
+    margin: 10px 0;
+}
+
+.two-column-container {
+    display: flex;
+    gap: 30px;
+    margin: 30px 0;
+    align-items: flex-start;
+}
+
+.two-column-container > .image-flow-container.vertical {
+    flex: 1;
+    max-width: 90%;
+    margin: 0;
+}
+
+.two-column-container .image-flow-container.vertical .flow-arrow {
+    transform: rotate(90deg);
+    margin: 10px 0;
+}
+
+@media (max-width: 768px) {
+    .image-flow-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .image-flow-item {
+        max-width: 90%;
+    }
+    
+    .flow-arrow {
+        transform: rotate(90deg);
+        margin: 10px 0;
+    }
+    
+    .two-column-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .two-column-container > .image-flow-container.vertical {
+        max-width: 100%;
+    }
+}
+</style>
+
+<div class="image-flow-container">
+    <div class="image-flow-item">
+        <div class="step-label">Original Image</div>
+        <img src="/images/compsci180/proj_3/library_original.png" alt="Original Library Image" />
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="image-flow-item">
+        <div class="step-label">Harris Corner Detection</div>
+        <img src="/images/compsci180/proj_3/library_harry.png" alt="Harris Corner Detection Result" />
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="image-flow-item">
+        <div class="step-label">ANMS Result (Top 500)</div>
+        <img src="/images/compsci180/proj_3/library_anms.png" alt="ANMS Result" />
+    </div>
+</div>
+
+<div class="two-column-container">
+    <div class="image-flow-container vertical">
+        <div class="image-flow-item">
+            <div class="step-label">DOE - Original Image</div>
+            <img src="/images/compsci180/proj_3/doe_original.png" alt="DOE Original Image" />
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="image-flow-item">
+            <div class="step-label">DOE - Harris Corner Detection</div>
+            <img src="/images/compsci180/proj_3/doe_harry.png" alt="DOE Harris Corner Detection Result" />
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="image-flow-item">
+            <div class="step-label">DOE - ANMS Result (Top 500)</div>
+            <img src="/images/compsci180/proj_3/doe_anms.png" alt="DOE ANMS Result" />
+        </div>
+    </div>
+    <div class="image-flow-container vertical">
+        <div class="image-flow-item">
+            <div class="step-label">DOME - Original Image</div>
+            <img src="/images/compsci180/proj_3/dome_original.png" alt="DOME Original Image" />
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="image-flow-item">
+            <div class="step-label">DOME - Harris Corner Detection</div>
+            <img src="/images/compsci180/proj_3/dome_harry.png" alt="DOME Harris Corner Detection Result" />
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="image-flow-item">
+            <div class="step-label">DOME - ANMS Result (Top 500)</div>
+            <img src="/images/compsci180/proj_3/dome_anms.png" alt="DOME ANMS Result" />
+        </div>
+    </div>
+</div>
+
+# Part B.2: Feature Descriptor Extraction
+
+Here we use a simple descriptor extraction algorithm that creates local feature descriptors for each detected interest point. For each feature point, a square window of a specified size (window_size, e.g., 40x40 pixels) centered at that point is extracted from the grayscale image. This window is then resized to a smaller, fixed patch size (e.g., 8x8 pixels) to achieve a compact representation. Before storing the descriptor, the patch is normalized by subtracting its mean and dividing by its standard deviation to ensure invariance to linear changes in brightness and contrast. The resulting descriptors are suitable for matching, as they encode normalized local structure around each interest point in a consistent, compact vector.
+ 
+Steps:
+1. For each given coordinate (interest point), extract a square window from the input image centered at that coordinate.
+2. If the window goes out of image bounds, skip that point.
+3. Resize the window to a smaller, fixed resolution (e.g., 8x8) using anti-aliasing for smoothness.
+4. Normalize the patch to have zero mean and unit variance.
+5. Store all normalized patches as feature descriptors for further matching tasks.
+
+The result of the descriptor extraction is shown below:
+
+<div align="center">
+    <img src="/images/compsci180/proj_3/library_feature_locs.png" alt="Descriptor Extraction Result" width="80%" />
+    <img src="/images/compsci180/proj_3/library_features.png" alt="Descriptor Extraction Result" width="80%" />
+</div>
+
+<div align="center">
+    <img src="/images/compsci180/proj_3/doe_feature_locs.png" alt="Descriptor Extraction Result" width="80%" />
+    <img src="/images/compsci180/proj_3/doe_features.png" alt="Descriptor Extraction Result" width="80%" />
+</div>
+
+<div align="center">
+    <img src="/images/compsci180/proj_3/dome_feature_locs.png" alt="Descriptor Extraction Result" width="80%" />
+    <img src="/images/compsci180/proj_3/dome_features.png" alt="Descriptor Extraction Result" width="80%" />
+</div>
+
+# Part B.3: Feature Matching
+
+The feature matching algorithm proceeds in the following stages:
+
+1. **Distance Calculation**: For each feature descriptor in the first image, we compute the pairwise distance (usually L2 norm) to every descriptor in the second image. This results in a distance matrix where each entry represents the difference between a pair of descriptors from the two images.
+
+2. **Nearest Neighbor Matching**: We then match each feature based on this distance matrix. Using the "ratio test" (inspired by Lowe's SIFT matching), the smallest and second-smallest distances for each descriptor are identified. If the ratio of the smallest to the second-smallest is below a given threshold (Here we choose 0.6 based on the essay), the match is considered reliable and kept. This helps filter matches that are ambiguous or likely to be incorrect.
+
+This approach ensures feature matches are both distinctive and robust, allowing for reliable correspondence between interest points across different images.
+
+The result of the feature matching is shown below:
+
+<div align="center">
+    <img src="/images/compsci180/proj_3/library_matching.png" alt="Feature Matching Result" width="80%" />
+</div>
+
+<div align="center">
+    <img src="/images/compsci180/proj_3/doe_matching.png" alt="Feature Matching Result" width="80%" />
+</div>
+
+<div align="center">
+    <img src="/images/compsci180/proj_3/dome_matching.png" alt="Feature Matching Result" width="80%" />
+</div>
+
+We can see that there are still a lot of bad matches, therefore we need to use the RANSAC to filter out the bad matches.
+
+# Part B.4: RANSAC
+
+The RANSAC algorithm is used to estimate the homography matrix. The algorithm is as follows:
+
+1. Randomly select 4 matches from the feature matching result.
+2. Estimate the homography matrix using the 4 matches.
+3. Calculate the inlier matches using the homography matrix.
+4. Repeat the process for a certain number of iterations or until the number of inlier matches is greater than a certain threshold.
+5. Return the coordinates of the inlier matches.
+6. Calculate the homography matrix using the coordinates of the inlier matches.
+
+We can first see that the RANSAC can help filter out the bad matches and get the correct matches out.
+
+<div align="center">
+    <img src="/images/compsci180/proj_3/library_ransac_match.png" alt="RANSAC Result" width="80%" />
+</div>
+
+<div align="center" style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; flex-wrap: nowrap; max-width: 100%; margin: 20px auto;">
+    <div style="flex: 1; max-width: 48%;">
+        <img src="/images/compsci180/proj_3/doe_ransac_match_0.png" alt="DOE RANSAC Result 0" style="width: 100%; height: auto; display: block;"/>
+    </div>
+    <div style="flex: 1; max-width: 48%;">
+        <img src="/images/compsci180/proj_3/doe_ransac_match_1.png" alt="DOE RANSAC Result 1" style="width: 100%; height: auto; display: block;"/>
+    </div>
+</div>
+
+<div align="center" style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; flex-wrap: nowrap; max-width: 100%; margin: 20px auto;">
+    <div style="flex: 1; max-width: 48%;">
+        <img src="/images/compsci180/proj_3/dome_ransac_match_0.png" alt="DOME RANSAC Result 0" style="width: 100%; height: auto; display: block;"/>
+    </div>
+    <div style="flex: 1; max-width: 48%;">
+        <img src="/images/compsci180/proj_3/dome_ransac_match_1.png" alt="DOME RANSAC Result 1" style="width: 100%; height: auto; display: block;"/>
+    </div>
+</div>
+
+The stitching result is shown below:
+
+<style>
+.comparison-container {
+    position: relative;
+    width: 80%;
+    max-width: 800px;
+    margin: 30px auto;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.comparison-wrapper {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    background: #f0f0f0;
+}
+
+.comparison-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.comparison-image.base {
+    z-index: 1;
+}
+
+.comparison-image.overlay {
+    z-index: 2;
+    clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+    -webkit-clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+}
+
+.comparison-slider {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 4px;
+    height: 100%;
+    background: #fff;
+    transform: translateX(-50%);
+    z-index: 10;
+    cursor: ew-resize;
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.comparison-slider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    border: 3px solid #007bff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.comparison-slider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-left: 8px solid #007bff;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    transform: translate(-30%, -50%);
+}
+
+.comparison-labels {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 5;
+}
+
+.comparison-label {
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.comparison-instructions {
+    text-align: center;
+    margin: 15px 0;
+    color: #666;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin: 30px 0;
+}
+
+@media (max-width: 768px) {
+    .comparison-container {
+        width: 95%;
+    }
+    
+    .comparison-slider::before {
+        width: 35px;
+        height: 35px;
+    }
+}
+</style>
+
+<div class="comparison-grid">
+    <div>
+        <h4 style="text-align: center; margin-bottom: 15px;">Library Stitching Comparison</h4>
+        <div class="comparison-container" id="libraryComparison">
+            <div class="comparison-wrapper">
+                <img src="/images/compsci180/proj_3/library_blending_result.png" alt="Artificial Stitching" class="comparison-image base">
+                <img src="/images/compsci180/proj_3/library_auto.png" alt="Automatic Stitching" class="comparison-image overlay">
+                <div class="comparison-slider" id="librarySlider"></div>
+                <div class="comparison-labels">
+                    <div class="comparison-label">Automatic</div>
+                    <div class="comparison-label">Artificial</div>
+                </div>
+            </div>
+        </div>
+        <div class="comparison-instructions">← Drag the slider to compare stitching methods</div>
+    </div>
+    <div>
+        <h4 style="text-align: center; margin-bottom: 15px;">DOE Stitching Comparison</h4>
+        <div class="comparison-container" id="doeComparison">
+            <div class="comparison-wrapper">
+                <img src="/images/compsci180/proj_3/doe_blending_result.png" alt="DOE Artificial Stitching" class="comparison-image base">
+                <img src="/images/compsci180/proj_3/doe_auto.png" alt="DOE Automatic Stitching" class="comparison-image overlay">
+                <div class="comparison-slider" id="doeSlider"></div>
+                <div class="comparison-labels">
+                    <div class="comparison-label">Automatic</div>
+                    <div class="comparison-label">Artificial</div>
+                </div>
+            </div>
+        </div>
+        <div class="comparison-instructions">← Drag the slider to compare stitching methods</div>
+    </div>
+    <div>
+        <h4 style="text-align: center; margin-bottom: 15px;">DOME Stitching Comparison</h4>
+        <div class="comparison-container" id="domeComparison">
+            <div class="comparison-wrapper">
+                <img src="/images/compsci180/proj_3/dome_blending_result.png" alt="DOME Artificial Stitching" class="comparison-image base">
+                <img src="/images/compsci180/proj_3/dome_auto.png" alt="DOME Automatic Stitching" class="comparison-image overlay">
+                <div class="comparison-slider" id="domeSlider"></div>
+                <div class="comparison-labels">
+                    <div class="comparison-label">Automatic</div>
+                    <div class="comparison-label">Artificial</div>
+                </div>
+            </div>
+        </div>
+        <div class="comparison-instructions">← Drag the slider to compare stitching methods</div>
+    </div>
+</div>
+
+<script>
+(function() {
+    function initComparison(containerId, sliderId) {
+        const container = document.getElementById(containerId);
+        const slider = document.getElementById(sliderId);
+        const overlay = container?.querySelector('.comparison-image.overlay');
+        
+        if (!container || !slider || !overlay) return;
+        
+        // Ensure overlay is visible and properly positioned
+        overlay.style.zIndex = '2';
+        overlay.style.position = 'absolute';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        
+        let isDragging = false;
+        
+        function updateSliderPosition(clientX) {
+            const rect = container.getBoundingClientRect();
+            const percentage = Math.max(0, Math.min(100, (clientX - rect.left) / rect.width * 100));
+            
+            slider.style.left = percentage + '%';
+            // Ensure the overlay image is properly positioned and clipped
+            overlay.style.clipPath = `polygon(0 0, ${percentage}% 0, ${percentage}% 100%, 0 100%)`;
+            overlay.style.webkitClipPath = `polygon(0 0, ${percentage}% 0, ${percentage}% 100%, 0 100%)`;
+        }
+        
+        slider.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            e.preventDefault();
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            updateSliderPosition(e.clientX);
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+        
+        container.addEventListener('click', (e) => {
+            if (e.target === container || e.target.classList.contains('comparison-wrapper')) {
+                updateSliderPosition(e.clientX);
+            }
+        });
+        
+        // Touch events for mobile
+        slider.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            e.preventDefault();
+        });
+        
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            updateSliderPosition(e.touches[0].clientX);
+        });
+        
+        document.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+        
+        // Initialize the overlay with proper clip-path
+        overlay.style.clipPath = 'polygon(0 0, 50% 0, 50% 100%, 0 100%)';
+        overlay.style.webkitClipPath = 'polygon(0 0, 50% 0, 50% 100%, 0 100%)';
+    }
+    
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            initComparison('libraryComparison', 'librarySlider');
+            initComparison('doeComparison', 'doeSlider');
+            initComparison('domeComparison', 'domeSlider');
+        });
+    } else {
+        initComparison('libraryComparison', 'librarySlider');
+        initComparison('doeComparison', 'doeSlider');
+        initComparison('domeComparison', 'domeSlider');
+    }
+})();
+</script>
+
+The most prominent difference you can spot is in the doe stitching (You can see that in the automatic stitching the road is more consistent), because the features in the picture are not as distinct as the library and dome. Therefore by selecting the matches by hand will really result in a worse result. Therefore, here the automatic stitching is better.
