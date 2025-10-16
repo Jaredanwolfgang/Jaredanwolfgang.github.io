@@ -809,3 +809,7 @@ The stitching result is shown below:
 </script>
 
 The most prominent difference you can spot is in the doe stitching (You can see that in the automatic stitching the road is more consistent), because the features in the picture are not as distinct as the library and dome. Therefore by selecting the matches by hand will really result in a worse result. Therefore, here the automatic stitching is better.
+
+# Conclusion
+
+After learning the image warping and mosaicing, I have a deeper understanding of the image processing and the computer vision. I also have a deeper understanding of the homography matrix and the RANSAC algorithm. This project is a great practice for me to apply the knowledge I have learned in the class to the real world problems. As we can see from the result, the automatic stitching is better than the manual stitching, especially for the doe library. I am surprised that even with the simplest detection and matching algorithm, we can still achieve relatively good results. 
