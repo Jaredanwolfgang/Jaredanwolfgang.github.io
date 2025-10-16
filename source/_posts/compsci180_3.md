@@ -630,9 +630,9 @@ The stitching result is shown below:
 
 .comparison-labels {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
-    right: 10px;
+    bottom: 5px;
+    left: 5px;
+    right: 5px;
     display: flex;
     justify-content: space-between;
     z-index: 5;
@@ -641,9 +641,9 @@ The stitching result is shown below:
 .comparison-label {
     background: rgba(0,0,0,0.7);
     color: white;
-    padding: 8px 16px;
+    padding: 4px 8px;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 10px;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -659,9 +659,9 @@ The stitching result is shown below:
 
 .comparison-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    margin: 30px 0;
+    grid-template-columns: 30% 40% 30%;
+    gap: 10px;
+    margin: 10px 0;
 }
 
 @media (max-width: 768px) {
@@ -673,12 +673,17 @@ The stitching result is shown below:
         width: 35px;
         height: 35px;
     }
+    
+    .comparison-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
 }
 </style>
 
 <div class="comparison-grid">
     <div>
-        <h4 style="text-align: center; margin-bottom: 15px;">Library Stitching Comparison</h4>
+        <h4 style="text-align: center; margin-bottom: 15px;">Library</h4>
         <div class="comparison-container" id="libraryComparison">
             <div class="comparison-wrapper">
                 <img src="/images/compsci180/proj_3/library_blending_result.png" alt="Artificial Stitching" class="comparison-image base">
@@ -690,10 +695,10 @@ The stitching result is shown below:
                 </div>
             </div>
         </div>
-        <div class="comparison-instructions">← Drag the slider to compare stitching methods</div>
+        <div class="comparison-instructions">← Drag the slider to compare</div>
     </div>
     <div>
-        <h4 style="text-align: center; margin-bottom: 15px;">DOE Stitching Comparison</h4>
+        <h4 style="text-align: center; margin-bottom: 15px;">DOE</h4>
         <div class="comparison-container" id="doeComparison">
             <div class="comparison-wrapper">
                 <img src="/images/compsci180/proj_3/doe_blending_result.png" alt="DOE Artificial Stitching" class="comparison-image base">
@@ -705,10 +710,10 @@ The stitching result is shown below:
                 </div>
             </div>
         </div>
-        <div class="comparison-instructions">← Drag the slider to compare stitching methods</div>
+        <div class="comparison-instructions">← Drag the slider to compare</div>
     </div>
     <div>
-        <h4 style="text-align: center; margin-bottom: 15px;">DOME Stitching Comparison</h4>
+        <h4 style="text-align: center; margin-bottom: 15px;">DOME</h4>
         <div class="comparison-container" id="domeComparison">
             <div class="comparison-wrapper">
                 <img src="/images/compsci180/proj_3/dome_blending_result.png" alt="DOME Artificial Stitching" class="comparison-image base">
@@ -720,7 +725,7 @@ The stitching result is shown below:
                 </div>
             </div>
         </div>
-        <div class="comparison-instructions">← Drag the slider to compare stitching methods</div>
+        <div class="comparison-instructions">← Drag the slider to compare</div>
     </div>
 </div>
 
@@ -807,6 +812,39 @@ The stitching result is shown below:
     }
 })();
 </script>
+
+<div align="center" style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; flex-wrap: nowrap; max-width: 100%; margin: 20px auto;">
+    <div style="flex: 1; max-width: 48%;">
+        <img src="/images/compsci180/proj_3/library_blending_result.png" alt="Library Blending Result" style="width: 100%; height: auto; display: block;"/>
+        <p style="font-size: 12px; color: #666; text-align: center;">Library Manual Stitching Result</p>
+    </div>
+    <div style="flex: 1; max-width: 48%;">
+        <img src="/images/compsci180/proj_3/library_auto.png" alt="Library Automatic Stitching" style="width: 100%; height: auto; display: block;"/>
+        <p style="font-size: 12px; color: #666; text-align: center;">Library Automatic Stitching Result</p>
+    </div>
+</div>
+
+<div align="center" style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; flex-wrap: nowrap; max-width: 100%; margin: 20px auto;">
+    <div style="flex: 1; max-width: 48%;">
+        <img src="/images/compsci180/proj_3/doe_blending_result.png" alt="Doe Blending Result" style="width: 100%; height: auto; display: block;"/>
+        <p style="font-size: 12px; color: #666; text-align: center;">Doe Manual Stitching Result</p>
+    </div>
+    <div style="flex: 1; max-width: 48%;">
+        <img src="/images/compsci180/proj_3/doe_auto.png" alt="Doe Automatic Stitching" style="width: 100%; height: auto; display: block;"/>
+        <p style="font-size: 12px; color: #666; text-align: center;">Doe Automatic Stitching Result</p>
+    </div>
+</div>
+
+<div align="center" style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; flex-wrap: nowrap; max-width: 100%; margin: 20px auto;">
+    <div style="flex: 1; max-width: 48%;">
+        <img src="/images/compsci180/proj_3/dome_blending_result.png" alt="Dome Blending Result" style="width: 100%; height: auto; display: block;"/>
+        <p style="font-size: 12px; color: #666; text-align: center;">Dome Manual Stitching Result</p>
+    </div>
+    <div style="flex: 1; max-width: 48%;">
+        <img src="/images/compsci180/proj_3/dome_auto.png" alt="Dome Automatic Stitching" style="width: 100%; height: auto; display: block;"/>
+        <p style="font-size: 12px; color: #666; text-align: center;">Dome Automatic Stitching Result</p>
+    </div>
+</div>
 
 The most prominent difference you can spot is in the doe stitching (You can see that in the automatic stitching the road is more consistent), because the features in the picture are not as distinct as the library and dome. Therefore by selecting the matches by hand will really result in a worse result. Therefore, here the automatic stitching is better.
 
