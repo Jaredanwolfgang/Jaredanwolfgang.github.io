@@ -1,5 +1,5 @@
 ---
-title: "[COMPSCI 180] NeRF Validation Explorer"
+title: "[COMPSCI 180] Neural Radiance Field!"
 date: 2025-11-09 10:00:00
 tags: [COMPSCI_180]
 categories: COMPSCI_180
@@ -8,6 +8,8 @@ categories: COMPSCI_180
 # Part 1: Fit a Neural Field to a 2D Image
 
 # Part 2: Fit a Neural Radiance Field from Multi-view Images
+
+Now we move on to the more challenging part of implementing a Neural Radiance Field from multi-view images.
 
 <div class="render-spin"
      data-frame-count="32"
