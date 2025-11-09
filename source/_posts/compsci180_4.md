@@ -1,0 +1,549 @@
+---
+title: "[COMPSCI 180] NeRF Validation Explorer"
+date: 2025-11-09 10:00:00
+tags: [COMPSCI_180]
+categories: COMPSCI_180
+---
+
+# Part 1: Fit a Neural Field to a 2D Image
+
+# Part 2: Fit a Neural Radiance Field from Multi-view Images
+
+<div class="render-spin"
+     data-frame-count="32"
+     tabindex="0"
+     role="region"
+     aria-label="Interactive render viewer">
+  <img id="renderSpinImage"
+       src="/images/compsci180/proj_4/render-view/render_0.png"
+       alt="Interactive render perspective preview"
+       loading="lazy"
+       draggable="false" />
+  <div class="render-spin__hint">Drag or scroll to explore different views</div>
+</div>
+
+<div class="train-slider">
+  <div class="train-slider__controls">
+    <label for="trainStepSlider" class="train-slider__label">
+      <span>
+        <strong>Training Step:</strong>
+        <span id="trainStepValue_0">50</span>
+      </span>
+      <span>
+        <strong>PSNR:</strong>
+        <span id="psnrValue_0">11.61</span> dB
+      </span>
+    </label>
+    <input type="range"
+           id="trainStepSlider"
+           min="50"
+           max="1000"
+           step="50"
+           value="50" />
+  </div>
+  <div class="train-slider__layout">
+    <div class="train-slider__image-wrapper">
+      <img id="trainStepImage_0"
+           src="/images/compsci180/proj_4/train_val/50_1000_0.png"
+           alt="Validation sample at step 50"
+           loading="lazy" />
+    </div>
+    <div class="train-slider__chart-wrapper">
+      <canvas id="psnrChart_0" aria-label="PSNR curve across training steps"></canvas>
+    </div>
+  </div>
+  <div class="train-slider__controls">
+    <label for="trainStepSlider" class="train-slider__label">
+      <span>
+        <strong>Training Step:</strong>
+        <span id="trainStepValue_1">50</span>
+      </span>
+      <span>
+        <strong>PSNR:</strong>
+        <span id="psnrValue_1">24.1</span> dB
+      </span>
+    </label>
+  </div>
+  <div class="train-slider__layout">
+    <div class="train-slider__image-wrapper">
+      <img id="trainStepImage_1"
+           src="/images/compsci180/proj_4/train_val/50_1000_1.png"
+           alt="Validation sample at step 50"
+           loading="lazy" />
+    </div>
+    <div class="train-slider__chart-wrapper">
+      <canvas id="psnrChart_1" aria-label="PSNR curve across training steps"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="video_result">
+  <div class="video_result__label">
+    <strong>Validation Progress Video</strong>
+  </div>
+  <video src="/images/compsci180/proj_4/test.mp4"
+         controls
+         aria-label="Validation progress video for training run"></video>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+(() => {
+  const renderSpin = document.querySelector('.render-spin');
+  if (renderSpin) {
+    const frameCount = Number(renderSpin.dataset.frameCount) || 32;
+    const renderImage = document.getElementById('renderSpinImage');
+    const renderHint = renderSpin.querySelector('.render-spin__hint');
+    const renderBasePath = '/images/compsci180/proj_4/';
+    const frames = Array.from({ length: frameCount }, (_, idx) => `${renderBasePath}render-view/render_${idx}.png`);
+    const preloadedFrames = new Array(frameCount);
+    let currentFrame = 0;
+    let startX = 0;
+    let isPointerDown = false;
+    const dragSensitivity = 6;
+
+    function preloadFrame(index) {
+      const normalized = ((index % frameCount) + frameCount) % frameCount;
+      if (preloadedFrames[normalized]) return;
+      const image = new Image();
+      image.src = frames[normalized];
+      preloadedFrames[normalized] = image;
+    }
+
+    function updateFrame(index) {
+      const normalized = ((index % frameCount) + frameCount) % frameCount;
+      if (!renderImage || normalized === currentFrame) return;
+      currentFrame = normalized;
+      renderImage.src = frames[currentFrame];
+      renderImage.alt = `Interactive render perspective ${currentFrame + 1} of ${frameCount}`;
+      preloadFrame(currentFrame + 1);
+      preloadFrame(currentFrame - 1);
+    }
+
+    function markInteracted() {
+      if (renderHint) {
+        renderHint.classList.add('render-spin__hint--hidden');
+      }
+    }
+
+    renderSpin.addEventListener('pointerdown', (event) => {
+      isPointerDown = true;
+      startX = event.clientX;
+      renderSpin.setPointerCapture(event.pointerId);
+      markInteracted();
+    });
+
+    renderSpin.addEventListener('pointermove', (event) => {
+      if (!isPointerDown) return;
+      const deltaX = event.clientX - startX;
+      if (Math.abs(deltaX) >= dragSensitivity) {
+        const frameDelta = Math.sign(deltaX) * Math.floor(Math.abs(deltaX) / dragSensitivity);
+        updateFrame(currentFrame - frameDelta);
+        startX = event.clientX;
+      }
+    });
+
+    const releasePointer = (event) => {
+      if (!isPointerDown) return;
+      isPointerDown = false;
+      try {
+        renderSpin.releasePointerCapture(event.pointerId);
+      } catch (error) {
+        // ignore if pointer already released
+      }
+    };
+
+    renderSpin.addEventListener('pointerup', releasePointer);
+    renderSpin.addEventListener('pointercancel', releasePointer);
+    renderSpin.addEventListener('pointerleave', () => {
+      isPointerDown = false;
+    });
+
+    renderSpin.addEventListener('wheel', (event) => {
+      event.preventDefault();
+      if (!event.deltaY && !event.deltaX) return;
+      markInteracted();
+      const direction = event.deltaY || event.deltaX;
+      const step = direction > 0 ? 1 : -1;
+      updateFrame(currentFrame + step);
+    }, { passive: false });
+
+    renderSpin.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+        event.preventDefault();
+        markInteracted();
+        updateFrame(currentFrame + 1);
+      } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        markInteracted();
+        updateFrame(currentFrame - 1);
+      }
+    });
+
+    if (renderImage) {
+      renderImage.alt = `Interactive render perspective 1 of ${frameCount}`;
+    }
+    preloadFrame(0);
+    preloadFrame(1);
+    if (renderHint) {
+      renderHint.addEventListener('transitionend', (event) => {
+        if (event.propertyName === 'opacity' && renderHint.classList.contains('render-spin__hint--hidden')) {
+          renderHint.style.display = 'none';
+        }
+      });
+    }
+  }
+
+  const slider = document.getElementById('trainStepSlider');
+  const valueLabel_0 = document.getElementById('trainStepValue_0');
+  const valueLabel_1 = document.getElementById('trainStepValue_1');
+  const image_0 = document.getElementById('trainStepImage_0');
+  const image_1 = document.getElementById('trainStepImage_1');
+  const psnrLabel_0 = document.getElementById('psnrValue_0');
+  const psnrLabel_1 = document.getElementById('psnrValue_1');
+  const basePath = '/images/compsci180/proj_4/train_val/';
+  const steps = [
+    50, 100, 150, 200, 250,
+    300, 350, 400, 450, 500,
+    550, 600, 650, 700, 750,
+    800, 850, 900, 950, 1000
+  ];
+  const psnrValues_0 = [
+    11.61, 12.83, 16.75, 17.96, 18.86,
+    19.31, 19.89, 20.42, 20.86, 21.36,
+    21.48, 21.96, 22.23, 22.74, 22.94,
+    23.04, 23.23, 23.25, 23.71, 23.83
+  ];
+  const psnrValues_1 = [
+    9.51, 10.22, 15.25, 17.89, 19.73,
+    20.06, 21.15, 21.53, 22.04, 22.28,
+    22.74, 22.97, 23.22, 23.57, 23.75,
+    24.07, 23.91, 24.38, 24.51, 24.53
+  ];
+
+  const defaultPointColor = '#2196f3';
+  const highlightPointColor = '#e53935';
+
+  const chartContext_0 = document.getElementById('psnrChart_0').getContext('2d');
+  const psnrChart_0 = new Chart(chartContext_0, {
+    type: 'line',
+    data: {
+      labels: steps,
+      datasets: [{
+        label: 'PSNR (dB)',
+        data: psnrValues_0,
+        borderColor: defaultPointColor,
+        backgroundColor: 'rgba(33, 150, 243, 0.1)',
+        fill: true,
+        tension: 0.25,
+        pointRadius: steps.map(() => 3),
+        pointHoverRadius: 6,
+        pointBackgroundColor: steps.map(() => defaultPointColor),
+        pointBorderWidth: 1.5
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        mode: 'index',
+        intersect: false
+      },
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          callbacks: {
+            label: (context) => `PSNR: ${context.parsed.y.toFixed(2)} dB`
+          }
+        }
+      },
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Training Step'
+          },
+          grid: {
+            display: false
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: 'PSNR (dB)'
+          },
+          suggestedMin: Math.floor(Math.min(...psnrValues_0)) - 1,
+          suggestedMax: Math.ceil(Math.max(...psnrValues_0)) + 1
+        }
+      }
+    }
+  });
+  const chartContext_1 = document.getElementById('psnrChart_1').getContext('2d');
+  const psnrChart_1 = new Chart(chartContext_1, {
+    type: 'line',
+    data: {
+      labels: steps,
+      datasets: [{
+        label: 'PSNR (dB)',
+        data: psnrValues_1,
+        borderColor: defaultPointColor,
+        backgroundColor: 'rgba(33, 150, 243, 0.1)',
+        fill: true,
+        tension: 0.25,
+        pointRadius: steps.map(() => 3),
+        pointHoverRadius: 6,
+        pointBackgroundColor: steps.map(() => defaultPointColor),
+        pointBorderWidth: 1.5
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        mode: 'index',
+        intersect: false
+      },
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          callbacks: {
+            label: (context) => `PSNR: ${context.parsed.y.toFixed(2)} dB`
+          }
+        }
+      },
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Training Step'
+          },
+          grid: {
+            display: false
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: 'PSNR (dB)'
+          },
+          suggestedMin: Math.floor(Math.min(...psnrValues_1)) - 1,
+          suggestedMax: Math.ceil(Math.max(...psnrValues_1)) + 1
+        }
+      }
+    }
+  });
+
+  function highlightChartPoint_0(step) {
+    const index = steps.indexOf(Number(step));
+    if (index === -1) return;
+
+    const dataset = psnrChart_0.data.datasets[0];
+    dataset.pointBackgroundColor = steps.map(() => defaultPointColor);
+    dataset.pointRadius = steps.map(() => 3);
+
+    dataset.pointBackgroundColor[index] = highlightPointColor;
+    dataset.pointRadius[index] = 6;
+
+    psnrChart_0.update('none');
+  }
+
+  function updatePreview_0() {
+    const step = slider.value;
+    valueLabel_0.textContent = step;
+    const imageName = `${step}_1000_0.png`;
+    image_0.src = `${basePath}${imageName}`;
+    image_0.alt = `Validation sample at step ${step}`;
+    const index = steps.indexOf(Number(step));
+    if (index !== -1) {
+      const psnr = psnrValues_0[index];
+      psnrLabel_0.textContent = psnr.toFixed(1);
+      highlightChartPoint_0(step);
+    } else {
+      psnrLabel_0.textContent = '—';
+    }
+  }
+
+  function highlightChartPoint_1(step) {
+    const index = steps.indexOf(Number(step));
+    if (index === -1) return;
+
+    const dataset = psnrChart_1.data.datasets[0];
+    dataset.pointBackgroundColor = steps.map(() => defaultPointColor);
+    dataset.pointRadius = steps.map(() => 3);
+
+    dataset.pointBackgroundColor[index] = highlightPointColor;
+    dataset.pointRadius[index] = 6;
+
+    psnrChart_1.update('none');
+  }
+
+  function updatePreview_1() {
+    const step = slider.value;
+    valueLabel_1.textContent = step;
+    const imageName = `${step}_1000_1.png`;
+    image_1.src = `${basePath}${imageName}`;
+    image_1.alt = `Validation sample at step ${step}`;
+    const index = steps.indexOf(Number(step));
+    if (index !== -1) {
+      const psnr = psnrValues_1[index];
+      psnrLabel_1.textContent = psnr.toFixed(1);
+      highlightChartPoint_1(step);
+    } else {
+      psnrLabel_1.textContent = '—';
+    }
+  }
+
+  slider.addEventListener('input', updatePreview_0);
+  slider.addEventListener('change', updatePreview_0);
+  slider.addEventListener('input', updatePreview_1);
+  slider.addEventListener('change', updatePreview_1);
+  updatePreview_0();
+  updatePreview_1();
+})();
+</script>
+
+<style>
+.render-spin {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 2rem auto 2.5rem;
+  text-align: center;
+  user-select: none;
+  cursor: grab;
+  touch-action: none;
+}
+
+.render-spin:active {
+  cursor: grabbing;
+}
+
+.render-spin:focus-visible {
+  outline: 2px solid #2196f3;
+  outline-offset: 6px;
+}
+
+.render-spin img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+}
+
+.render-spin__hint {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: rgba(33, 33, 33, 0.75);
+  color: #fff;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.render-spin__hint--hidden {
+  opacity: 0;
+  transform: translate(-50%, 12px);
+}
+
+.train-slider {
+  margin: 2rem auto;
+  max-width: 960px;
+  padding: 1.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  background-color: #fafafa;
+}
+
+.train-slider__controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.train-slider__label {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+}
+
+.train-slider input[type="range"] {
+  width: 100%;
+}
+
+.train-slider__layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+}
+
+.train-slider__image-wrapper {
+  width: 100%;
+}
+
+.train-slider__image-wrapper img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+.train-slider__chart-wrapper {
+  position: relative;
+  width: 100%;
+  height: 320px;
+}
+
+.video_result {
+  width: 100%;
+  max-width: 960px;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.video_result__label {
+  margin-bottom: 0.75rem;
+  font-size: 1.05rem;
+}
+
+.video_result video {
+  width: 70%;
+  display: block;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+@media (min-width: 992px) {
+  .train-slider__layout {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .train-slider__image-wrapper {
+    flex: 0 0 66%;
+    max-width: 66%;
+  }
+
+  .train-slider__chart-wrapper {
+    flex: 0 0 34%;
+    max-width: 34%;
+  }
+}
+</style>
+
