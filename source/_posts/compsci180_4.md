@@ -24,9 +24,159 @@ Here is the 3D scan of my doggy! You can drag and scroll to explore different vi
 
 # Part 1: Fit a Neural Field to a 2D Image
 
+## Part 1.1: Model Architecture
+
+| Property | Description |
+| --- | --- |
+| **Model Type** | Multi-Layer Perceptron (MLP) with sinusoidal positional encoding |
+| **Purpose** | 2D coordinate-based neural radiance field (NeRF-style) for image regression |
+| **Input** | 2D spatial coordinates `(x, y)` |
+| **Output** | RGB color values `(r, g, b)` in range `[0, 1]` |
+| **Number of HiddenLayers** | 3 |
+| **Layer Width** | 128 |
+| **Sinusoidal Encoding** | Sinusoidal encoding with `L = 10` frequency bands |
+| **Activation Function** | ReLU for hidden layers, Sigmoid for output |
+| **Optimizer** | Adam |
+| **Learning Rate** | `1e-2` |
+| **Loss Function** | Mean Squared Error (MSE) |
+
+## Part 1.2: Training progression visualization
+
+<div class="train-slider">
+  <div class="train-slider__controls">
+    <label for="trainStepSlider_part1" class="train-slider__label">
+      <span>
+        <strong>Training Step (Standard Image):</strong>
+        <span id="trainStepValue_2">0</span>
+      </span>
+      <span>
+        <strong>Training Step (Self-Chosen Image):</strong>
+        <span id="trainStepValue_3">0</span>
+      </span>
+    </label>
+    <input type="range"
+           id="trainStepSlider_part1"
+           min="0"
+           max="10"
+           step="1"
+           value="0" />
+  </div>
+  <div class="train-slider__layout train-slider__layout--side-by-side">
+    <div class="train-slider__image-wrapper">
+      <img id="trainStepImage_2"
+           src="/images/compsci180/proj_4/part1_results/iter_0.png"
+           alt="Part 1.2: Training progression visualization"
+           loading="lazy" />
+    </div>
+    <div class="train-slider__image-wrapper">
+      <img id="trainStepImage_3"
+           src="/images/compsci180/proj_4/part1_results/iter_0_self.png"
+           alt="Part 1.2: Training progression visualization"
+           loading="lazy" />
+    </div>
+  </div>
+</div>
+
+## Part 1.3: Grid for demonstrating the effect of hidden dimensions and L
+
+| Dimension/L (dB) | 4 | 10 | 16 | 25 |
+| --- | --- | --- | --- | --- |
+| [128, 128, 128] | 26.03 | 27.81 | 27.67 | 27.44 |
+| [256, 256, 256] | 26.01 | 28.33 | **28.42** | 27.69 |
+
+<div style="display: flex; flex-wrap: wrap; gap: 1.5rem 1rem; justify-content: center; margin: 2rem 0;">
+  <div style="flex: 1 1 180px; max-width: 24%; min-width: 160px; text-align: center;">
+    <img src="/images/compsci180/proj_4/part1_results/128_128_128_4.png" alt="[4, 128, 128, 128]" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.10);margin-bottom:0.5rem;">
+  </div>
+  <div style="flex: 1 1 180px; max-width: 24%; min-width: 160px; text-align: center;">
+    <img src="/images/compsci180/proj_4/part1_results/128_128_128_10.png" alt="[10, 128, 128, 128]" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.10);margin-bottom:0.5rem;">
+  </div>
+  <div style="flex: 1 1 180px; max-width: 24%; min-width: 160px; text-align: center;">
+    <img src="/images/compsci180/proj_4/part1_results/128_128_128_16.png" alt="[16, 128, 128, 128]" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.10);margin-bottom:0.5rem;">
+  </div>
+  <div style="flex: 1 1 180px; max-width: 24%; min-width: 160px; text-align: center;">
+    <img src="/images/compsci180/proj_4/part1_results/128_128_128_25.png" alt="[25, 128, 128, 128]" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.10);margin-bottom:0.5rem;">
+  </div>
+  <div style="flex: 1 1 180px; max-width: 24%; min-width: 160px; text-align: center;">
+    <img src="/images/compsci180/proj_4/part1_results/256_256_256_4.png" alt="[4, 256, 256, 256]" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.10);margin-bottom:0.5rem;">
+  </div>
+  <div style="flex: 1 1 180px; max-width: 24%; min-width: 160px; text-align: center;">
+    <img src="/images/compsci180/proj_4/part1_results/256_256_256_10.png" alt="[10, 256, 256, 256]" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.10);margin-bottom:0.5rem;">
+  </div>
+  <div style="flex: 1 1 180px; max-width: 24%; min-width: 160px; text-align: center;">
+    <img src="/images/compsci180/proj_4/part1_results/256_256_256_16.png" alt="[16, 256, 256, 256]" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.10);margin-bottom:0.5rem;">
+  </div>
+  <div style="flex: 1 1 180px; max-width: 24%; min-width: 160px; text-align: center;">
+    <img src="/images/compsci180/proj_4/part1_results/256_256_256_25.png" alt="[25, 256, 256, 256]" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.10);margin-bottom:0.5rem;">
+  </div>
+</div>
+
+## Part 1.4: PSNR Curve when training
+
+This is the PSNR curve and Loss curve when training with the self-chosen image. The dimensions are [128, 128, 128] and L = 10.
+
+<div class="psnr-curve">
+  <img src="/images/compsci180/proj_4/part1_results/psnr_curve_self.png" alt="PSNR Curve" loading="lazy">
+</div>
+
 # Part 2: Fit a Neural Radiance Field from Multi-view Images
 
 Now we move on to the more challenging part of implementing a Neural Radiance Field from multi-view images.
+
+## Part 2.1: Brief Introduction 
+
+The NeRF model part can be devided into the following steps:
+
+1. We first need to calculate the rays from the cameras.
+2. After we get the rays, we need to sample the points along the rays.
+3. We need to implement the models, the models take the point coordinates and the camera rays as input and output the color and density of the point.
+4. Then we need to integrate the density along the ray to get the final color of the ray.
+
+### Calculate rays from cameras
+
+Follow the instruction given, I implement 3 functions for calculating the rays from cameras namly:
+
+1. `transfrom` : This function transforms a point from the camera coordinates to world coordinates. (Extrinsic Transformation Matrix)
+2. `pixel_to_camera` : This function transforms a pixel to the camera coordinates. (Intrinsic Transformation Matrix)
+3. `pixel_to_ray` : This function transforms a pixel to the ray direction in the camera coordinates. It first us the `pixel_to_camera` to get the camera coordinates of the pixel, then use the camera coordinates to get the ray direction in the camera coordinates. `ray_o` represents the camera origin direction in the world coordinates and `ray_d` represents the ray direction in the world coordinates.
+
+After the process, we can get the rays in the world coordinates. Then we can sample the points along the rays to get the color and density of the point.
+
+### Sample points along the ray
+
+Here I just implement a class `RaysData` for handling all the arrays in a group of images. Inside the class, I implement the function `sample_rays` by first sampling `num_images` number of images from the image pool and then sample `tot_samples/num_images` number of rays for each image.
+
+After sampling the rays, we need to sample along the rays by using the `sample_along_rays` function. This function is implemented by first sampling `num_samples` number of points along the ray and then transform the points to the world coordinates.
+
+### Implement the models
+
+Here I implement a class `NeRF3D` inheriting from `torch.nn.Module` class. The class is used to implement the NeRF model. 
+
+| **Component**                  | **Input**              | **Output**                   | **Description**                            |
+| ------------------------------ | ---------------------- | ---------------------------- | ------------------------------------------ |
+| **Inputs**                     | `x ∈ ℝ³`, `ray_d ∈ ℝ³` | —                            | 3D point and ray direction                 |
+| **Position Encoding (x)**      | `(B, 3)`               | `(B, 63)`                    | 10-frequency sinusoidal encoding           |
+| **Direction Encoding (ray_d)** | `(B, 3)`               | `(B, 27)`                    | 4-frequency sinusoidal encoding            |
+| **MLP Trunk**                  | `(B, 63)`              | `(B, 256)`                   | 4-layer MLP with ReLU activations          |
+| **Skip Block**                 | `(B, 256 + 63)`        | `(B, 256)`                   | Combines trunk output and encoded position |
+| **Density Head**               | `(B, 256)`             | `(B, 1)`                     | Predicts volume density (Softplus)         |
+| **Feature Layer**              | `(B, 256)`             | `(B, 256)`                   | Latent feature for color prediction        |
+| **Color Head**                 | `(B, 256 + 27)`        | `(B, 3)`                     | Predicts RGB color (Sigmoid)               |
+| **Outputs**                    | —                      | `density ∈ ℝ¹`, `color ∈ ℝ³` | Final NeRF outputs per sample              |
+
+### Integrate the density along the ray
+
+Then after we put the 3D coordinates and rays into the model, we can get the density and the color of the point. Then we need to integrate the density along the ray to get the final color of the ray by implementing the `volrend` function.
+
+In the function, we use the `t_val` from the `sample_along_rays` function to know that after the purtubation what is the distance between each sample point. Then we can use the density to integrate the color along the ray.
+
+### Training the model
+
+Then we set the optimizer to be Adam and the loss function to be the mean squared error. We then train the model for 1000/5000/10000 steps based on the task we have.
+
+## Part 2.2: Visualization of rays and samples with cameras
+
+This is the visualization of rays and samples with cameras. We can see that the rays are sampled from the camera and the samples are sampled from the rays.
 
 <div class="render-spin"
      data-frame-count="32"
@@ -40,6 +190,8 @@ Now we move on to the more challenging part of implementing a Neural Radiance Fi
        draggable="false" />
   <div class="render-spin__hint">Drag or scroll to explore different views</div>
 </div>
+
+## Part 2.3: Training visualization / PSNR curve
 
 <div class="train-slider">
   <div class="train-slider__controls">
@@ -96,18 +248,32 @@ Now we move on to the more challenging part of implementing a Neural Radiance Fi
   </div>
 </div>
 
+## Part 2.4: Spherical rendering video
+
+After training the model, we can render the test scenes in spherical coordinates.
+
 <div class="video_result">
   <div class="video_result__label">
-    <strong>Validation Progress Video</strong>
+    <strong>Test Video</strong>
   </div>
   <video src="/images/compsci180/proj_4/test.mp4"
          controls
-         aria-label="Validation progress video for training run"></video>
+         aria-label="Test video for training run"></video>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-(() => {
+(function() {
+  'use strict';
+  
+  // Wait for DOM to be ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+  
+  function init() {
   const renderSpin = document.querySelector('.render-spin');
   const doggyRenderSpin = document.querySelector('.doggy-render-spin');
   if (renderSpin && doggyRenderSpin) {
@@ -317,10 +483,15 @@ Now we move on to the more challenging part of implementing a Neural Radiance Fi
   }
 
   const slider = document.getElementById('trainStepSlider');
+  const slider_part1 = document.getElementById('trainStepSlider_part1');
   const valueLabel_0 = document.getElementById('trainStepValue_0');
   const valueLabel_1 = document.getElementById('trainStepValue_1');
+  const valueLabel_2 = document.getElementById('trainStepValue_2');
+  const valueLabel_3 = document.getElementById('trainStepValue_3');
   const image_0 = document.getElementById('trainStepImage_0');
   const image_1 = document.getElementById('trainStepImage_1');
+  const image_2 = document.getElementById('trainStepImage_2');
+  const image_3 = document.getElementById('trainStepImage_3');
   const psnrLabel_0 = document.getElementById('psnrValue_0');
   const psnrLabel_1 = document.getElementById('psnrValue_1');
   const basePath = '/images/compsci180/proj_4/train_val/';
@@ -330,6 +501,11 @@ Now we move on to the more challenging part of implementing a Neural Radiance Fi
     550, 600, 650, 700, 750,
     800, 850, 900, 950, 1000
   ];
+  // Mapping arrays for Part 1.2: 11 images each
+  // Image 2: steps from 0 to 500 with step size 50
+  const steps_part1_2 = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500];
+  // Image 3: steps from 0 to 1000 with step size 100
+  const steps_part1_3 = [0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
   const psnrValues_0 = [
     11.61, 12.83, 16.75, 17.96, 18.86,
     19.31, 19.89, 20.42, 20.86, 21.36,
@@ -519,12 +695,62 @@ Now we move on to the more challenging part of implementing a Neural Radiance Fi
     }
   }
 
-  slider.addEventListener('input', updatePreview_0);
-  slider.addEventListener('change', updatePreview_0);
-  slider.addEventListener('input', updatePreview_1);
-  slider.addEventListener('change', updatePreview_1);
-  updatePreview_0();
-  updatePreview_1();
+  function updatePreview_2() {
+    if (!slider_part1 || !image_2 || !valueLabel_2) return;
+    const index = Number(slider_part1.value);
+    if (index < 0 || index >= steps_part1_2.length) return;
+    const step = steps_part1_2[index];
+    valueLabel_2.textContent = step;
+    const imageName = `iter_${step}.png`;
+    const imagePath = `/images/compsci180/proj_4/part1_results/${imageName}`;
+    image_2.src = imagePath;
+    image_2.alt = `Part 1.2: Training progression visualization at iteration ${step}`;
+    image_2.onerror = function() {
+      console.error('Failed to load image:', imagePath);
+      this.style.border = '2px solid red';
+    };
+    image_2.onload = function() {
+      this.style.border = '';
+    };
+  }
+
+  function updatePreview_3() {
+    if (!slider_part1 || !image_3 || !valueLabel_3) return;
+    const index = Number(slider_part1.value);
+    if (index < 0 || index >= steps_part1_3.length) return;
+    const step = steps_part1_3[index];
+    valueLabel_3.textContent = step;
+    const imageName = `iter_${step}_self.png`;
+    const imagePath = `/images/compsci180/proj_4/part1_results/${imageName}`;
+    image_3.src = imagePath;
+    image_3.alt = `Part 1.2: Training progression visualization at iteration ${step}`;
+    image_3.onerror = function() {
+      console.error('Failed to load image:', imagePath);
+      this.style.border = '2px solid red';
+    };
+    image_3.onload = function() {
+      this.style.border = '';
+    };
+  }
+
+  if (slider) {
+    slider.addEventListener('input', updatePreview_0);
+    slider.addEventListener('change', updatePreview_0);
+    slider.addEventListener('input', updatePreview_1);
+    slider.addEventListener('change', updatePreview_1);
+    updatePreview_0();
+    updatePreview_1();
+  }
+
+  if (slider_part1) {
+    slider_part1.addEventListener('input', updatePreview_2);
+    slider_part1.addEventListener('change', updatePreview_2);
+    slider_part1.addEventListener('input', updatePreview_3);
+    slider_part1.addEventListener('change', updatePreview_3);
+    updatePreview_2();
+    updatePreview_3();
+  }
+  } // end of init function
 })();
 </script>
 
@@ -662,6 +888,16 @@ Now we move on to the more challenging part of implementing a Neural Radiance Fi
   margin-top: 1.75rem;
 }
 
+.train-slider__layout--side-by-side {
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.train-slider__layout--side-by-side .train-slider__image-wrapper {
+  flex: 1;
+  width: 50%;
+}
+
 .train-slider__image-wrapper {
   width: 100%;
 }
@@ -700,6 +936,33 @@ Now we move on to the more challenging part of implementing a Neural Radiance Fi
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 }
 
+.psnr-curve {
+  width: 70%;
+  display: block;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.psnr-curve img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .train-slider__layout--side-by-side {
+    flex-direction: column;
+  }
+
+  .train-slider__layout--side-by-side .train-slider__image-wrapper {
+    width: 100%;
+  }
+}
+
 @media (min-width: 992px) {
   .train-slider__layout {
     flex-direction: row;
@@ -714,6 +977,11 @@ Now we move on to the more challenging part of implementing a Neural Radiance Fi
   .train-slider__chart-wrapper {
     flex: 0 0 34%;
     max-width: 34%;
+  }
+
+  .train-slider__layout--side-by-side .train-slider__image-wrapper {
+    flex: 1;
+    max-width: 50%;
   }
 }
 </style>
