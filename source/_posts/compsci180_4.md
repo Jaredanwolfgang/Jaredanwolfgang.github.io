@@ -5,6 +5,23 @@ tags: [COMPSCI_180]
 categories: COMPSCI_180
 ---
 
+# Part 0: Calibrating Your Camera and Capture a 3D Scan!
+
+Here is the 3D scan of my doggy! You can drag and scroll to explore different views.
+
+<div class="doggy-render-spin"
+     data-frame-count="19"
+     tabindex="0"
+     role="region"
+     aria-label="Interactive render viewer">
+  <img id="doggyRenderSpinImage"
+       src="/images/compsci180/proj_4/doggy_render_view/render_0.png"
+       alt="Interactive render perspective preview"
+       loading="lazy"
+       draggable="false" />
+  <div class="doggy-render-spin__hint">Drag or scroll to explore different views</div>
+</div>
+
 # Part 1: Fit a Neural Field to a 2D Image
 
 # Part 2: Fit a Neural Radiance Field from Multi-view Images
@@ -92,16 +109,25 @@ Now we move on to the more challenging part of implementing a Neural Radiance Fi
 <script>
 (() => {
   const renderSpin = document.querySelector('.render-spin');
-  if (renderSpin) {
+  const doggyRenderSpin = document.querySelector('.doggy-render-spin');
+  if (renderSpin && doggyRenderSpin) {
     const frameCount = Number(renderSpin.dataset.frameCount) || 32;
+    const doggyFrameCount = Number(doggyRenderSpin.dataset.frameCount) || 19;
     const renderImage = document.getElementById('renderSpinImage');
+    const doggyRenderImage = document.getElementById('doggyRenderSpinImage');
     const renderHint = renderSpin.querySelector('.render-spin__hint');
+    const doggyRenderHint = doggyRenderSpin.querySelector('.doggy-render-spin__hint');
     const renderBasePath = '/images/compsci180/proj_4/';
     const frames = Array.from({ length: frameCount }, (_, idx) => `${renderBasePath}render-view/render_${idx}.png`);
+    const doggyRenderFrames = Array.from({ length: doggyFrameCount }, (_, idx) => `${renderBasePath}doggy_render_view/render_${idx}.png`);
     const preloadedFrames = new Array(frameCount);
+    const preloadedDoggyFrames = new Array(doggyFrameCount);
     let currentFrame = 0;
+    let doggyCurrentFrame = 0;
     let startX = 0;
+    let doggyStartX = 0;
     let isPointerDown = false;
+    let isDoggyPointerDown = false;
     const dragSensitivity = 6;
 
     function preloadFrame(index) {
@@ -110,6 +136,13 @@ Now we move on to the more challenging part of implementing a Neural Radiance Fi
       const image = new Image();
       image.src = frames[normalized];
       preloadedFrames[normalized] = image;
+    }
+    function preloadDoggyFrame(index) {
+      const normalized = ((index % doggyFrameCount) + doggyFrameCount) % doggyFrameCount;
+      if (preloadedDoggyFrames[normalized]) return;
+      const image = new Image();
+      image.src = doggyRenderFrames[normalized];
+      preloadedDoggyFrames[normalized] = image;
     }
 
     function updateFrame(index) {
@@ -122,9 +155,22 @@ Now we move on to the more challenging part of implementing a Neural Radiance Fi
       preloadFrame(currentFrame - 1);
     }
 
+    function updateDoggyFrame(index) {
+      const normalized = ((index % doggyFrameCount) + doggyFrameCount) % doggyFrameCount;
+      if (!doggyRenderImage || normalized === doggyCurrentFrame) return;
+      doggyCurrentFrame = normalized;
+      doggyRenderImage.src = doggyRenderFrames[doggyCurrentFrame];
+      doggyRenderImage.alt = `Interactive render perspective ${doggyCurrentFrame + 1} of ${doggyFrameCount}`;
+      preloadDoggyFrame(doggyCurrentFrame + 1);
+      preloadDoggyFrame(doggyCurrentFrame - 1);
+    }
+
     function markInteracted() {
       if (renderHint) {
         renderHint.classList.add('render-spin__hint--hidden');
+      }
+      if (doggyRenderHint) {
+        doggyRenderHint.classList.add('doggy-render-spin__hint--hidden');
       }
     }
 
@@ -133,6 +179,15 @@ Now we move on to the more challenging part of implementing a Neural Radiance Fi
       startX = event.clientX;
       renderSpin.setPointerCapture(event.pointerId);
       markInteracted();
+    });
+
+    doggyRenderSpin.addEventListener('pointerdown', (event) => {
+      isDoggyPointerDown = true;
+      doggyStartX = event.clientX;
+      doggyRenderSpin.setPointerCapture(event.pointerId);
+      if (doggyRenderHint) {
+        doggyRenderHint.classList.add('doggy-render-spin__hint--hidden');
+      }
     });
 
     renderSpin.addEventListener('pointermove', (event) => {
@@ -145,6 +200,16 @@ Now we move on to the more challenging part of implementing a Neural Radiance Fi
       }
     });
 
+    doggyRenderSpin.addEventListener('pointermove', (event) => {
+      if (!isDoggyPointerDown) return;
+      const deltaX = event.clientX - doggyStartX;
+      if (Math.abs(deltaX) >= dragSensitivity) {
+        const frameDelta = Math.sign(deltaX) * Math.floor(Math.abs(deltaX) / dragSensitivity);
+        updateDoggyFrame(doggyCurrentFrame - frameDelta);
+        doggyStartX = event.clientX;
+      }
+    });
+
     const releasePointer = (event) => {
       if (!isPointerDown) return;
       isPointerDown = false;
@@ -154,6 +219,22 @@ Now we move on to the more challenging part of implementing a Neural Radiance Fi
         // ignore if pointer already released
       }
     };
+
+    const releaseDoggyPointer = (event) => {
+      if (!isDoggyPointerDown) return;
+      isDoggyPointerDown = false;
+      try {
+        doggyRenderSpin.releasePointerCapture(event.pointerId);
+      } catch (error) {
+        // ignore if pointer already released
+      }
+    };
+
+    doggyRenderSpin.addEventListener('pointerup', releaseDoggyPointer);
+    doggyRenderSpin.addEventListener('pointercancel', releaseDoggyPointer);
+    doggyRenderSpin.addEventListener('pointerleave', () => {
+      isDoggyPointerDown = false;
+    });
 
     renderSpin.addEventListener('pointerup', releasePointer);
     renderSpin.addEventListener('pointercancel', releasePointer);
@@ -170,6 +251,17 @@ Now we move on to the more challenging part of implementing a Neural Radiance Fi
       updateFrame(currentFrame + step);
     }, { passive: false });
 
+    doggyRenderSpin.addEventListener('wheel', (event) => {
+      event.preventDefault();
+      if (!event.deltaY && !event.deltaX) return;
+      if (doggyRenderHint) {
+        doggyRenderHint.classList.add('doggy-render-spin__hint--hidden');
+      }
+      const direction = event.deltaY || event.deltaX;
+      const step = direction > 0 ? 1 : -1;
+      updateDoggyFrame(doggyCurrentFrame + step);
+    }, { passive: false });
+
     renderSpin.addEventListener('keydown', (event) => {
       if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
         event.preventDefault();
@@ -182,15 +274,43 @@ Now we move on to the more challenging part of implementing a Neural Radiance Fi
       }
     });
 
+    doggyRenderSpin.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+        event.preventDefault();
+        if (doggyRenderHint) {
+          doggyRenderHint.classList.add('doggy-render-spin__hint--hidden');
+        }
+        updateDoggyFrame(doggyCurrentFrame + 1);
+      } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        if (doggyRenderHint) {
+          doggyRenderHint.classList.add('doggy-render-spin__hint--hidden');
+        }
+        updateDoggyFrame(doggyCurrentFrame - 1);
+      }
+    });
+
     if (renderImage) {
       renderImage.alt = `Interactive render perspective 1 of ${frameCount}`;
     }
+    if (doggyRenderImage) {
+      doggyRenderImage.alt = `Interactive render perspective 1 of ${doggyFrameCount}`;
+    }
     preloadFrame(0);
+    preloadDoggyFrame(0);
     preloadFrame(1);
+    preloadDoggyFrame(1);
     if (renderHint) {
       renderHint.addEventListener('transitionend', (event) => {
         if (event.propertyName === 'opacity' && renderHint.classList.contains('render-spin__hint--hidden')) {
           renderHint.style.display = 'none';
+        }
+      });
+    }
+    if (doggyRenderHint) {
+      doggyRenderHint.addEventListener('transitionend', (event) => {
+        if (event.propertyName === 'opacity' && doggyRenderHint.classList.contains('doggy-render-spin__hint--hidden')) {
+          doggyRenderHint.style.display = 'none';
         }
       });
     }
@@ -454,6 +574,55 @@ Now we move on to the more challenging part of implementing a Neural Radiance Fi
 }
 
 .render-spin__hint--hidden {
+  opacity: 0;
+  transform: translate(-50%, 12px);
+}
+
+.doggy-render-spin {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 2rem auto 2.5rem;
+  text-align: center;
+  user-select: none;
+  cursor: grab;
+  touch-action: none;
+}
+
+.doggy-render-spin:active {
+  cursor: grabbing;
+}
+
+.doggy-render-spin:focus-visible {
+  outline: 2px solid #2196f3;
+  outline-offset: 6px;
+}
+
+.doggy-render-spin img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+}
+
+.doggy-render-spin__hint {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: rgba(33, 33, 33, 0.75);
+  color: #fff;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.doggy-render-spin__hint--hidden {
   opacity: 0;
   transform: translate(-50%, 12px);
 }
