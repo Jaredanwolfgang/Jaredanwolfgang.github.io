@@ -261,6 +261,46 @@ After training the model, we can render the test scenes in spherical coordinates
          aria-label="Test video for training run"></video>
 </div>
 
+# Part 2.6 Training with Your Own Data
+
+The training data that I use is a doggy of mine. Here is the demonstration of the data:
+
+<div class="psnr-curve">
+  <img src="/images/compsci180/proj_4/doggy_data.jpg" alt="Doggy Data" loading="lazy">
+</div>
+
+I have taken in total 38 images of the doggy from different angles and different distances. I try to keep the distance of the camera nearly the same for each image. After ArUco tags detection, only 29 images survive with having ID 4 tags in the image. Using the 28 of the images for training and the other 1 image for validation, I get the following results:
+
+
+<div class="video_result">
+  <div class="video_result__label">
+    <strong>Test Video</strong>
+  </div>
+  <video src="/images/compsci180/proj_4/self_test.mp4"
+         controls
+         aria-label="Test video for own data"></video>
+</div>
+
+## Hyperparameter Tuning
+
+Here I tune the hyperparameters of the model to get the best performance. I tune the following hyperparameters:
+
+1. Sample `near` and `far` distance from the camera.
+2. Sample `num_samples` number of points along the ray.
+3. Training steps
+
+These parameters are important as if we choose the distance too far, it has high possibility that those points are occluded and therefore do not contribute to the final color of the ray. Also, if we sample too few points, it will not be able to capture the details of the scene and will lead to some bad holes in the rendering.
+
+## Training loss over iterations
+
+<div class="psnr-curve">
+  <img src="/images/compsci180/proj_4/doggy_loss.png" alt="Doggy Loss Curve" loading="lazy">
+</div>
+
+## Intermediate renders of the scene during training
+
+Here are the intermediate renders of the scene during training. We can see that the model is able to fit the training data well.
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 (function() {
