@@ -263,14 +263,13 @@ After training the model, we can render the test scenes in spherical coordinates
 
 # Part 2.6 Training with Your Own Data
 
-The training data that I use is a doggy of mine. Here is the demonstration of the data:
+The training data that I use is a doggy of mine. Here is the demonstration of the data: (The data is first resized to 200x200 for faster evaluation.)
 
 <div class="psnr-curve">
   <img src="/images/compsci180/proj_4/doggy_data.jpg" alt="Doggy Data" loading="lazy">
 </div>
 
 I have taken in total 38 images of the doggy from different angles and different distances. I try to keep the distance of the camera nearly the same for each image. After ArUco tags detection, only 29 images survive with having ID 4 tags in the image. Using the 28 of the images for training and the other 1 image for validation, I get the following results:
-
 
 <div class="video_result">
   <div class="video_result__label">
@@ -300,6 +299,10 @@ These parameters are important as if we choose the distance too far, it has high
 ## Intermediate renders of the scene during training
 
 Here are the intermediate renders of the scene during training. We can see that the model is able to fit the training data well.
+
+<div class="psnr-curve">
+  <img src="/images/compsci180/proj_4/train_process.gif" alt="Doggy Train Process" loading="lazy">
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
