@@ -1,6 +1,7 @@
 ---
 title: "[COMPSCI 180] Diffusion Models!"
 date: 2025-11-24 10:00:00
+mathjax: true
 tags: [COMPSCI_180]
 categories: COMPSCI_180
 ---
@@ -521,12 +522,6 @@ We now explore how strongly the diffusion process can pull a slightly corrupted 
 
 <div style="display: flex; overflow-x: auto; gap: 18px; padding: 15px 5px; margin: 10px 0; border: 1px solid #eee; border-radius: 6px;">
   <div style="text-align: center; min-width: 220px;">
-    <img src="/images/compsci180/proj_5/part_1_7/campanile/Original.png" alt="Original Campanile image" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
-    <img src="/images/compsci180/proj_5/part_1_7/cat/Original.png" alt="Original Campanile image" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
-    <img src="/images/compsci180/proj_5/part_1_7/calbears/Original.png" alt="Original Campanile image" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
-    <p style="margin-top: 8px; font-weight: bold;">Original</p>
-  </div>
-  <div style="text-align: center; min-width: 220px;">
     <img src="/images/compsci180/proj_5/part_1_7/campanile/1.png" alt="Iterative denoising start index 1" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
     <img src="/images/compsci180/proj_5/part_1_7/cat/1.png" alt="Iterative denoising start index 1" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
     <img src="/images/compsci180/proj_5/part_1_7/calbears/1.png" alt="Iterative denoising start index 1" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
@@ -562,6 +557,12 @@ We now explore how strongly the diffusion process can pull a slightly corrupted 
     <img src="/images/compsci180/proj_5/part_1_7/calbears/20.png" alt="Iterative denoising start index 20" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
     <p style="margin-top: 8px; font-weight: bold;">Start @ 20</p>
   </div>
+  <div style="text-align: center; min-width: 220px;">
+    <img src="/images/compsci180/proj_5/part_1_7/campanile/Original.png" alt="Original Campanile image" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7/cat/Original.png" alt="Original Campanile image" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7/calbears/Original.png" alt="Original Campanile image" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <p style="margin-top: 8px; font-weight: bold;">Original</p>
+  </div>
 </div>
 
 ### Part 1.7.1 Editing Hand-Drawn and Web Images
@@ -569,12 +570,6 @@ We now explore how strongly the diffusion process can pull a slightly corrupted 
 In this section, we will use pictures from the web and hand-drawn images to test the editing ability of the diffusion model.
 
 <div style="display: flex; overflow-x: auto; gap: 18px; padding: 15px 5px; margin: 10px 0; border: 1px solid #eee; border-radius: 6px;">
-  <div style="text-align: center; min-width: 220px;">
-    <img src="/images/compsci180/proj_5/part_1_7_1/web/Original.png" alt="Original Campanile image" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
-    <img src="/images/compsci180/proj_5/part_1_7_1/hand_1/Original.png" alt="Original Campanile image" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
-    <img src="/images/compsci180/proj_5/part_1_7_1/hand_2/Original.png" alt="Original Campanile image" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
-    <p style="margin-top: 8px; font-weight: bold;">Original</p>
-  </div>
   <div style="text-align: center; min-width: 220px;">
     <img src="/images/compsci180/proj_5/part_1_7_1/web/1.png" alt="Iterative denoising start index 1" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
     <img src="/images/compsci180/proj_5/part_1_7_1/hand_1/1.png" alt="Iterative denoising start index 1" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
@@ -611,7 +606,312 @@ In this section, we will use pictures from the web and hand-drawn images to test
     <img src="/images/compsci180/proj_5/part_1_7_1/hand_2/20.png" alt="Iterative denoising start index 20" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
     <p style="margin-top: 8px; font-weight: bold;">Start @ 20</p>
   </div>
+  <div style="text-align: center; min-width: 220px;">
+    <img src="/images/compsci180/proj_5/part_1_7_1/web/Original.png" alt="Original Campanile image" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_1/hand_1/Original.png" alt="Original Campanile image" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_1/hand_2/Original.png" alt="Original Campanile image" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <p style="margin-top: 8px; font-weight: bold;">Original</p>
+  </div>
 </div>
 
 ### Part 1.7.2 Inpainting
 
+In this section, we will use the inpainting method to fill in the missing parts of the images. The technique is to only allow denoising in the masked region and keep the rest of the image unchanged.
+
+<div style="display: flex; overflow-x: auto; gap: 18px; padding: 15px 5px; margin: 10px 0; border: 1px solid #eee; border-radius: 6px;">
+  <div style="text-align: center; min-width: 220px;">
+    <img src="/images/compsci180/proj_5/part_1_7_2/campanella/image.png" alt="Iterative denoising start index 1" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_2/face/image.png" alt="Iterative denoising start index 1" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_2/zootopia/image.png" alt="Iterative denoising start index 1" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <p style="margin-top: 8px; font-weight: bold;">Original Image</p>
+  </div>
+  <div style="text-align: center; min-width: 220px;">
+    <img src="/images/compsci180/proj_5/part_1_7_2/campanella/mask.png" alt="Iterative denoising start index 3" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_2/face/mask.png" alt="Iterative denoising start index 3" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_2/zootopia/mask.png" alt="Iterative denoising start index 3" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <p style="margin-top: 8px; font-weight: bold;">Mask Image</p>
+  </div>
+  <div style="text-align: center; min-width: 220px;">
+    <img src="/images/compsci180/proj_5/part_1_7_2/campanella/replace.png" alt="Iterative denoising start index 5" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_2/face/replace.png" alt="Iterative denoising start index 5" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_2/zootopia/replace.png" alt="Iterative denoising start index 5" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <p style="margin-top: 8px; font-weight: bold;">Replace Area</p>
+  </div>
+  <div style="text-align: center; min-width: 220px;">
+    <img src="/images/compsci180/proj_5/part_1_7_2/campanella/inpaint.png" alt="Iterative denoising start index 7" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_2/face/inpaint.png" alt="Iterative denoising start index 7" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_2/zootopia/inpaint.png" alt="Iterative denoising start index 7" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <p style="margin-top: 8px; font-weight: bold;">Result Image</p>
+  </div>
+</div>
+
+### Part 1.7.3 Text-Conditioned Image-to-image Translation
+
+In this section, we change the prompt 'A high quality photo' to my own prompt and see the translation results. The technique is to use pictures with similar structure, or the translation process will not be smooth.
+
+
+<div style="display: flex; overflow-x: auto; gap: 18px; padding: 15px 5px; margin: 10px 0; border: 1px solid #eee; border-radius: 6px;">
+  <div style="text-align: center; min-width: 220px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/cat/1.png" alt="Iterative denoising start index 1" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/calbears/1.png" alt="Iterative denoising start index 1" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/campanile/1.png" alt="Iterative denoising start index 1" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <p style="margin-top: 8px; font-weight: bold;">Start @ 1</p>
+  </div>
+  <div style="text-align: center; min-width: 220px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/cat/3.png" alt="Iterative denoising start index 3" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/calbears/3.png" alt="Iterative denoising start index 3" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/campanile/3.png" alt="Iterative denoising start index 3" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <p style="margin-top: 8px; font-weight: bold;">Start @ 3</p>
+  </div>
+  <div style="text-align: center; min-width: 220px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/cat/5.png" alt="Iterative denoising start index 5" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/calbears/5.png" alt="Iterative denoising start index 5" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/campanile/5.png" alt="Iterative denoising start index 5" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <p style="margin-top: 8px; font-weight: bold;">Start @ 5</p>
+  </div>
+  <div style="text-align: center; min-width: 220px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/cat/7.png" alt="Iterative denoising start index 7" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/calbears/7.png" alt="Iterative denoising start index 7" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/campanile/7.png" alt="Iterative denoising start index 7" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <p style="margin-top: 8px; font-weight: bold;">Start @ 7</p>
+  </div>
+  <div style="text-align: center; min-width: 220px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/cat/10.png" alt="Iterative denoising start index 10" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/calbears/10.png" alt="Iterative denoising start index 10" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/campanile/10.png" alt="Iterative denoising start index 10" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <p style="margin-top: 8px; font-weight: bold;">Start @ 10</p>
+  </div>
+  <div style="text-align: center; min-width: 220px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/cat/20.png" alt="Iterative denoising start index 20" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/calbears/20.png" alt="Iterative denoising start index 20" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/campanile/20.png" alt="Iterative denoising start index 20" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <p style="margin-top: 8px; font-weight: bold;">Start @ 20</p>
+  </div>
+  <div style="text-align: center; min-width: 220px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/cat/Original.png" alt="Original Campanile image" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/calbears/Original.png" alt="Original Campanile image" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5/part_1_7_3/campanile/Original.png" alt="Original Campanile image" style="width: 100%; max-width: 240px; height: auto; border-radius: 4px;">
+    <p style="margin-top: 8px; font-weight: bold;">Original</p>
+  </div>
+</div>
+
+### Part 1.8 Visual Anagrams
+
+In this section, we will use the visual anagrams method to create a new image from the original images. The visual anagrams are created using the following steps:
+
+1. $\epsilon_1 = \text{CFG of UNet}(x_t, t, p_1)$
+
+2. $\epsilon_2 = \text{flip}(\text{CFG of UNet}(\text{flip}(x_t), t, p_2))$
+
+3. $\epsilon = (\epsilon_1 + \epsilon_2) / 2$
+
+where UNet is the diffusion model UNet from before, $\text{flip}(\cdot)$ is a function that flips the image, and $p_1$ and $p_2$ are two different text prompt embeddings.
+
+<div style="display: flex; justify-content: center; gap: 30px; margin: 30px 0; flex-wrap: wrap;">
+  <div style="text-align: center;">
+    <div id="anagram-container-1" style="perspective: 1000px; width: 400px; height: 400px; cursor: pointer; margin: 0 auto;">
+      <div id="anagram-card-1" style="position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.6s;">
+        <div id="anagram-front-1" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+          <img src="/images/compsci180/proj_5/part_1_8/oldman_woman/oldman.png" alt="Old Man" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+        </div>
+        <div id="anagram-back-1" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; transform: rotateY(180deg); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+          <img src="/images/compsci180/proj_5/part_1_8/oldman_woman/woman.png" alt="Woman" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+        </div>
+      </div>
+    </div>
+    <p style="margin-top: 15px; font-weight: bold; color: #333;">An oil painting of an old man <br> ↔ <br> An oil painting of an young lady</p>
+    <p style="margin-top: 5px; color: #666; font-size: 0.9em;">Click to flip</p>
+  </div>
+  
+  <div style="text-align: center;">
+    <div id="anagram-container-2" style="perspective: 1000px; width: 400px; height: 400px; cursor: pointer; margin: 0 auto;">
+      <div id="anagram-card-2" style="position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.6s;">
+        <div id="anagram-front-2" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+          <img src="/images/compsci180/proj_5/part_1_8/snowy_village_campfire/snowy_village.png" alt="Snowy Village" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+        </div>
+        <div id="anagram-back-2" style="position: absolute; width: 100%; height: 100%; backface-visibility: hidden; transform: rotateY(180deg); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+          <img src="/images/compsci180/proj_5/part_1_8/snowy_village_campfire/campfire.png" alt="Campfire" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+        </div>
+      </div>
+    </div>
+    <p style="margin-top: 15px; font-weight: bold; color: #333;">An oil painting of a snowy mountain village <br> ↔ <br> An oil painting of people around a campfire</p>
+    <p style="margin-top: 5px; color: #666; font-size: 0.9em;">Click to flip</p>
+  </div>
+</div>
+
+<style>
+  #anagram-card-1.flipped {
+    transform: rotateY(180deg);
+  }
+  #anagram-card-2.flipped {
+    transform: rotateY(180deg);
+  }
+</style>
+
+<script>
+  function initAnagramFlip() {
+    // First anagram (oldman_woman)
+    const card1 = document.getElementById('anagram-card-1');
+    const container1 = document.getElementById('anagram-container-1');
+    
+    if (card1 && container1) {
+      let isFlipped1 = false;
+      container1.addEventListener('click', function() {
+        isFlipped1 = !isFlipped1;
+        if (isFlipped1) {
+          card1.classList.add('flipped');
+        } else {
+          card1.classList.remove('flipped');
+        }
+      });
+    }
+    
+    // Second anagram (snowy_village_campfire)
+    const card2 = document.getElementById('anagram-card-2');
+    const container2 = document.getElementById('anagram-container-2');
+    
+    if (card2 && container2) {
+      let isFlipped2 = false;
+      container2.addEventListener('click', function() {
+        isFlipped2 = !isFlipped2;
+        if (isFlipped2) {
+          card2.classList.add('flipped');
+        } else {
+          card2.classList.remove('flipped');
+        }
+      });
+    }
+  }
+  
+  document.addEventListener('DOMContentLoaded', initAnagramFlip);
+  document.addEventListener('pjax:complete', initAnagramFlip);
+</script>
+
+### Part 1.9 Hybrid Images
+
+For the Hybrid Images, we are taking the low-pass noise of the first image and the high-pass noise of the second image and then add them together to get the hybrid image. The algorithm is as follows:
+
+1. $\epsilon_1 = \text{CFG of UNet}(x_t, t, p_1)$
+
+2. $\epsilon_2 = \text{CFG of UNet}(x_t, t, p_2)$
+
+3. $\epsilon = f_\text{lowpass}(\epsilon_1) + f_\text{highpass}(\epsilon_2)$
+
+where UNet is the diffusion model UNet, $f_\text{lowpass}$ is a low pass function, $f_\text{highpass}$ is a high pass function, and $p_1$ and $p_2$ are two different text prompt embeddings. Our final noise estimate is $\epsilon$. 
+
+The following are the results of the hybrid images:
+
+<div style="display: flex; justify-content: center; gap: 30px; margin: 30px 0; flex-wrap: wrap;">
+  <div style="text-align: center;">
+    <div id="hybrid-1-container" style="position: relative; width: 400px; height: 400px; margin: 0 auto;">
+      <img id="hybrid-1-full" src="/images/compsci180/proj_5/part_1_9/hybrid_1_small.png" alt="Hybrid Image 1 - Low Pass" onclick="return false;" data-no-lightbox style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; opacity: 1; pointer-events: none;">
+      <img id="hybrid-1-small" src="/images/compsci180/proj_5/part_1_9/hybrid_1.png" alt="Hybrid Image 1 - High Pass" onclick="return false;" data-no-lightbox style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; pointer-events: none;">
+    </div>
+    <p style="margin-top: 15px; font-weight: bold; color: #333;">A lithograph of a skull <br> ↔ <br> A lithograph of waterfalls</p>
+    <p id="hybrid-1-label" style="margin-top: 5px; color: #666; font-size: 0.9em;">High Pass (Normal Picture)</p>
+  </div>
+  <div style="text-align: center;">
+    <div id="hybrid-2-container" style="position: relative; width: 400px; height: 400px; margin: 0 auto;">
+      <img id="hybrid-2-full" src="/images/compsci180/proj_5/part_1_9/hybrid_2_small.png" alt="Hybrid Image 2 - Low Pass" onclick="return false;" data-no-lightbox style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; opacity: 1; pointer-events: none;">
+      <img id="hybrid-2-small" src="/images/compsci180/proj_5/part_1_9/hybrid_2.png" alt="Hybrid Image 2 - High Pass" onclick="return false;" data-no-lightbox style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; pointer-events: none;">
+    </div>
+    <p style="margin-top: 15px; font-weight: bold; color: #333;">A painting of a red panda <br> ↔ <br> A painting of houseplant</p>
+    <p id="hybrid-2-label" style="margin-top: 5px; color: #666; font-size: 0.9em;">High Pass (Normal Picture)</p>
+  </div>
+</div>
+
+<style>
+  @keyframes hybridFade {
+    0%, 45% {
+      opacity: 1;
+      transform: scale(0.2);
+    }
+    50%, 95% {
+      opacity: 0;
+      transform: scale(0.2);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(0.2);
+    }
+  }
+  
+  @keyframes hybridFadeReverse {
+    0%, 45% {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    50%, 95% {
+      opacity: 1;
+      transform: scale(0.9);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+  }
+  
+  #hybrid-1-full, #hybrid-2-full {
+    animation: hybridFade 4s ease-in-out infinite;
+    transform-origin: center center;
+  }
+  
+  #hybrid-1-small, #hybrid-2-small {
+    animation: hybridFadeReverse 4s ease-in-out infinite;
+    transform-origin: center center;
+  }
+</style>
+
+<script>
+  function updateHybridLabel(prefix) {
+    const fullImg = document.getElementById(prefix + '-full');
+    const label = document.getElementById(prefix + '-label');
+    
+    if (!fullImg || !label) return;
+    
+    const opacity = parseFloat(window.getComputedStyle(fullImg).opacity);
+    
+    if (opacity > 0.5) {
+      label.textContent = 'High Pass (Normal Picture)';
+    } else {
+      label.textContent = 'Low Pass (Small Picture - Zoomed)';
+    }
+  }
+  
+  function initHybridAnimation() {
+    const fullImg1 = document.getElementById('hybrid-1-full');
+    const fullImg2 = document.getElementById('hybrid-2-full');
+    const container1 = document.getElementById('hybrid-1-container');
+    const container2 = document.getElementById('hybrid-2-container');
+    
+    // Prevent click events on containers to disable lightbox preview
+    if (container1) {
+      container1.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }, true);
+    }
+    
+    if (container2) {
+      container2.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }, true);
+    }
+    
+    if (fullImg1) {
+      // Update label periodically to match animation for hybrid-1
+      setInterval(() => updateHybridLabel('hybrid-1'), 100);
+    }
+    
+    if (fullImg2) {
+      // Update label periodically to match animation for hybrid-2
+      setInterval(() => updateHybridLabel('hybrid-2'), 100);
+    }
+  }
+  
+  document.addEventListener('DOMContentLoaded', initHybridAnimation);
+  document.addEventListener('pjax:complete', initHybridAnimation);
+</script>
