@@ -55,7 +55,7 @@
       
       .layout {
         display: grid;
-        grid-template-columns: 1.5fr 8.5fr;
+        grid-template-columns: 2.5fr 7.5fr;
         gap: 24px;
         align-items: start;
       }
@@ -132,11 +132,12 @@
         letter-spacing: -0.5px;
         display: block;
       }
+
       
       .profile-info {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 2px;
         flex: 1;
         justify-content: center;
         align-items: flex-start;
@@ -184,20 +185,20 @@
       .research-card {
         background: #ffffff;
         border-radius: 12px;
-        padding: 25px;
+        padding: 18px;
         margin-bottom: 25px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
         border-left: 5px solid #667eea;
       }
       
       .research-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
       }
       
       .research-card.featured {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(145deg, #6e7afc 0%, #a06bff 100%);
         color: white;
         border-left: 5px solid #f093fb;
       }
@@ -213,21 +214,21 @@
       .research-header {
         display: flex;
         align-items: flex-start;
-        gap: 15px;
-        margin-bottom: 15px;
+        gap: 12px;
+        margin-bottom: 12px;
       }
       .research-meta {
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 2px;
         flex: 1;
       }
       
       .research-icon {
-        font-size: 28px;
-        width: 50px;
-        height: 50px;
-        min-width: 50px;
+        font-size: 24px;
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -235,6 +236,7 @@
         border-radius: 10px;
         color: #667eea;
         flex-shrink: 0;
+        margin-top: 18px;
       }
       
       .research-card.featured .research-icon {
@@ -243,15 +245,16 @@
       }
       
       .research-title {
-        font-size: 1.3em;
+        font-size: 1.2em;
         font-weight: 600;
         margin: 0;
-        line-height: 1.4;
+        line-height: 1.35;
       }
       .research-authors {
         color: #444;
         font-weight: 500;
-        font-size: 0.96em;
+        font-size: 0.92em;
+        line-height: 1.4;
       }
       .research-authors strong {
         font-weight: 700;
@@ -260,16 +263,16 @@
       
       .research-links {
         display: flex;
-        gap: 15px;
-        margin-top: 15px;
+        gap: 12px;
+        margin-top: 12px;
         flex-wrap: wrap;
       }
       
       .research-link {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
-        padding: 8px 16px;
+        gap: 5px;
+        padding: 6px 14px;
         background: rgba(102, 126, 234, 0.1);
         border-radius: 6px;
         text-decoration: none;
@@ -296,6 +299,7 @@
         color: #555;
         line-height: 1.6;
         margin-top: 10px;
+        margin-bottom: 2px;
       }
       .research-card.featured .research-authors {
         color: #fff;
@@ -306,6 +310,208 @@
       
       .research-card.featured .research-description {
         color: rgba(255, 255, 255, 0.95);
+      }
+      
+      .conference-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 12px;
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 20px;
+        font-size: 0.85em;
+        font-weight: 600;
+        margin-bottom: 4px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+      
+      .research-card:not(.featured) .conference-badge {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+      }
+      
+      .research-title-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      
+      .research-title-only {
+        font-size: 1.2em;
+        font-weight: 600;
+        margin: 0;
+        line-height: 1.35;
+        color: inherit;
+      }
+      
+      .research-authors-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        margin-top: 0px;
+      }
+      
+      .research-authors-label {
+        font-size: 0.85em;
+        opacity: 0.9;
+        font-weight: 500;
+      }
+      
+      /* Enhanced research card improvements */
+      .research-card-header-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+      }
+      
+      .research-header-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .research-icon-compact {
+        font-size: 20px;
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 8px;
+        color: white;
+        flex-shrink: 0;
+      }
+      
+      .research-card:not(.featured) .research-icon-compact {
+        background: rgba(102, 126, 234, 0.1);
+        color: #667eea;
+      }
+      
+      .conference-badge-compact {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px 10px;
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 16px;
+        font-size: 0.8em;
+        font-weight: 600;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+      
+      .research-card:not(.featured) .conference-badge-compact {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+      }
+      
+      .research-tags {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-left: auto;
+      }
+      
+      .research-tag-item {
+        display: inline-flex;
+        align-items: center;
+        padding: 2px 8px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        font-size: 0.75em;
+        font-weight: 500;
+        opacity: 0.9;
+      }
+      
+      .research-card:not(.featured) .research-tag-item {
+        background: rgba(102, 126, 234, 0.1);
+        color: #667eea;
+        opacity: 1;
+      }
+      
+      .research-tag-separator {
+        opacity: 0.5;
+        font-size: 0.75em;
+      }
+      
+      .research-title-divider {
+        border: none;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.15);
+        margin: 8px 0 10px;
+      }
+      
+      .research-card:not(.featured) .research-title-divider {
+        background: rgba(0, 0, 0, 0.1);
+      }
+      
+      .research-authors-improved {
+        color: rgba(255, 255, 255, 0.85);
+        font-weight: 400;
+        font-size: 0.9em;
+        line-height: 1.5;
+      }
+      
+      .research-card:not(.featured) .research-authors-improved {
+        color: #666;
+      }
+      
+      .research-authors-improved strong {
+        font-weight: 700;
+        color: white;
+        opacity: 1;
+      }
+      
+      .research-card:not(.featured) .research-authors-improved strong {
+        color: #2c3e50;
+      }
+      
+      .research-authors-improved .author-name {
+        margin-right: 6px;
+      }
+      
+      .research-authors-improved .author-separator {
+        margin: 0 4px;
+        opacity: 0.6;
+      }
+      
+      .research-link-improved {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 16px;
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 8px;
+        text-decoration: none;
+        color: white;
+        font-size: 0.88em;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      
+      .research-card:not(.featured) .research-link-improved {
+        background: rgba(102, 126, 234, 0.1);
+        color: #667eea;
+        border: 1px solid rgba(102, 126, 234, 0.2);
+      }
+      
+      .research-link-improved:hover {
+        background: rgba(255, 255, 255, 0.35);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      }
+      
+      .research-card:not(.featured) .research-link-improved:hover {
+        background: rgba(102, 126, 234, 0.2);
       }
       
       .project-grid {
@@ -501,6 +707,31 @@
           gap: 10px;
         }
         
+        .research-card-header-row {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+        }
+        
+        .research-tags {
+          margin-left: 0;
+          width: 100%;
+        }
+        
+        .research-link-improved {
+          font-size: 0.85em;
+          padding: 6px 12px;
+        }
+        
+        .research-link-improved .link-text {
+          display: none;
+        }
+        
+        .research-link-improved {
+          min-width: 40px;
+          justify-content: center;
+        }
+        
         .research-icon {
           align-self: flex-start;
         }
@@ -544,107 +775,195 @@
           justify-content: center;
         }
       }
+      
+      @media (max-width: 400px) {
+        .research-link-improved {
+          min-width: 36px;
+          padding: 6px 10px;
+        }
+        
+        .research-link-improved .fas,
+        .research-link-improved .fab {
+          margin: 0;
+        }
+        
+        .research-link-improved .link-text {
+          display: none;
+        }
+        
+        .research-tag-item {
+          font-size: 0.7em;
+          padding: 2px 6px;
+        }
+        
+        .research-title-only {
+          font-size: 1.1em;
+        }
+      }
     </style>
 </head>
 <body>
     <div class="about-container">
         <div class="layout">
             <aside class="profile-section">
-                <div class="profile-header">
-                    <img src="/images/self.jpg" alt="Yicheng Xiao" class="profile-photo">
-                    <div class="profile-info">
-                        <h1 class="profile-name">Yicheng Xiao (肖翊成)</h1>
-                    </div>
+              <div class="profile-header">
+                <img src="/images/self.jpg" alt="Yicheng Xiao" class="profile-photo">
+              
+                <div class="profile-info">
+                  <h2 style="margin: 0;">Yicheng Xiao</h2>
+                  <div style="color: #333; font-size: 0.9em; margin-bottom: 0.3em;">
+                    Jerry Xiao / 肖翊成
+                  </div>
+                  <div style="color: #666; font-size: 0.75em; margin-bottom: 0.8em;">
+                    jaredanjerry [at] gmail [dot] com
+                  </div>
+              
+                  <ul style="list-style: disc; padding-left: 1.2em; margin: 0;">
+                    <li style="margin-bottom: 0.4em;">
+                      I'm interested in accelerating model training and inference process.
+                    </li>
+              
+                    <li style="margin-bottom: 0.4em;">
+                      I was a member of the supercomputing team at SUSTech.
+                      <span style="display: block; color: #666; font-size: 0.65em; margin-top: 0.1em;">
+                        (IndySCC23, ASC24, IndySCC24, APAC24, IndySCC25)
+                      </span>
+                    </li>
+              
+                    <li>
+                      I enjoy playing ultimate 🥏. I am a member of BougaBoom at SUSTech and 
+                      <a href="https://www.instagram.com/ursaminorultimate/?hl=en" 
+                         target="_blank" 
+                         style="color: #667eea; text-decoration: none;">
+                        Ursa Minor
+                      </a> 
+                      at Berkeley during my visiting.
+                    </li>
+                  </ul>
                 </div>
-                <div class="contact-links" style="justify-content: flex-start; gap: 14px; flex-wrap: wrap; margin-top: 4px;">
-                    <a href="mailto:xiaoyc2022@mail.sustech.edu.cn" class="contact-link" style="padding: 10px 12px; background: none; color: #667eea; box-shadow: none;">
-                        <i class="fas fa-envelope"></i>
-                    </a>
-                    <a href="https://github.com/Jaredanwolfgang" target="_blank" class="contact-link" style="padding: 10px 12px; background: none; color: #667eea; box-shadow: none;">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://jaredanwolfgang.github.io/" target="_blank" class="contact-link" style="padding: 10px 12px; background: none; color: #667eea; box-shadow: none;">
-                        <i class="fas fa-blog"></i>
-                    </a>
-                </div>
-                <div class="badge-container" style="margin: 10px 0 0 0; justify-content: flex-start;">
-                    <a class="badge" style="background-color:rgb(255, 145, 105);" href="/2025/01/04/projects_hub/">Computer Science</a>
-                    <a class="badge" style="background-color:rgb(71, 102, 255);" href="">Distributed Machine Learning</a>
-                    <a class="badge" style="background-color:rgb(213, 136, 255);" href="">Diffusion Models</a>
-                </div>
+              </div>
+              <div class="contact-links" style="justify-content: flex-start; gap: 14px; flex-wrap: wrap; margin-top: 4px;">
+                  <a href="mailto:jaredanjerry@gmail.com" class="contact-link" style="padding: 10px 12px; background: none; color: #667eea; box-shadow: none;">
+                      <i class="fas fa-envelope"></i>
+                  </a>
+                  <a href="https://github.com/Jaredanwolfgang" target="_blank" class="contact-link" style="padding: 10px 12px; background: none; color: #667eea; box-shadow: none;">
+                      <i class="fab fa-github"></i>
+                  </a>
+                  <a href="https://jaredanwolfgang.github.io/" target="_blank" class="contact-link" style="padding: 10px 12px; background: none; color: #667eea; box-shadow: none;">
+                      <i class="fas fa-blog"></i>
+                  </a>
+              </div>
             </aside>
 
             <div class="content-section">
                 <h2>Education</h2>
-
                 <div class="education-section">
                     <div class="education-item">
                         <strong>Bachelor of Science in Computer Science</strong><br>
                         <em>Southern University of Science and Technology (SUSTech)</em><br>
-                        <span style="color: #666;">2022 - Present</span> (Expected Graduation: 2026)
+                        <span style="color: #666;">2022 - Present</span> Expected Graduation: 2026
                     </div>
                     
                     <div class="education-item">
                         <strong>National University of Singapore (NUS) SoC Workshop</strong><br>
-                        <span style="color: #666;">2024.5 - 2024.7</span>
+                        <span style="color: #666;">2024.5 - 2024.7</span> Summer School
                     </div>
                     
                     <div class="education-item">
                         <strong>University of California, Berkeley (UCB) BISP</strong><br>
-                        <span style="color: #666;">2025.9 - 2025.12</span> (Visiting Student)
+                        <span style="color: #666;">2025.9 - 2025.12</span> Visiting Student
                     </div>
                 </div>
-
                 <hr>
-
                 <h2>Research & Publications</h2>
 
                 <div class="research-section">
                     <h3>Featured Research</h3>
 
                     <div class="research-card featured">
-                        <div class="research-header">
-                            <div class="research-icon">
-                                <i class="fas fa-compress-arrows-alt"></i>
-                            </div>
-                            <div class="research-meta">
-                                <h4 class="research-title">[NeurIPS 2025] CompactFusion: Accelerating Parallel Diffusion Model Serving with Residual Compression</h4>
-                                <div class="research-authors">
-                                    Authors: Jiajun Luo, <strong>Yicheng Xiao</strong>, Jianru Xu, Yangxiu You, Rongwei Lu, Chen Tang, Jingyan Jiang, Zhi Wang
+                        <div class="research-card-header-row">
+                            <div class="research-header-left">
+                                <div class="research-icon-compact">
+                                    <i class="fas fa-compress-arrows-alt"></i>
+                                </div>
+                                <div class="conference-badge-compact">
+                                    <i class="fas fa-award"></i>
+                                    NeurIPS 2025
                                 </div>
                             </div>
+                            <div class="research-tags">
+                                <span class="research-tag-item">Diffusion</span>
+                                <span class="research-tag-separator">·</span>
+                                <span class="research-tag-item">Compression</span>
+                                <span class="research-tag-separator">·</span>
+                                <span class="research-tag-item">Parallel Inference</span>
+                                <span class="research-tag-separator">·</span>
+                                <span class="research-tag-item">Model Serving</span>
+                            </div>
                         </div>
+                        
+                        <h4 class="research-title-only">CompactFusion: Accelerating Parallel Diffusion Model Serving with Residual Compression</h4>
+                        
+                        <div class="research-authors-improved">
+                            <span class="author-name">Jiajun Luo*</span><span class="author-separator">,</span>
+                            <span class="author-name"><strong>Yicheng Xiao*</strong></span><span class="author-separator">,</span>
+                            <span class="author-name">Jianru Xu</span><span class="author-separator">,</span>
+                            <span class="author-name">Yangxiu You</span><span class="author-separator">,</span>
+                            <span class="author-name">Rongwei Lu</span><span class="author-separator">,</span>
+                            <span class="author-name">Chen Tang</span><span class="author-separator">,</span>
+                            <span class="author-name">Jingyan Jiang</span><span class="author-separator">,</span>
+                            <span class="author-name">Zhi Wang</span>
+                        </div>
+                        
+                        <hr class="research-title-divider">
+                        
                         <div class="research-description">
                             A compression framework that significantly reduces communication overhead in parallel diffusion model inference by exploiting temporal redundancy through residual compression. Achieves 3.0x speedup on 4xL20 while maintaining high generation quality. Accepted by NeurIPS 2025.
                         </div>
+                        
                         <div class="research-links">
-                            <a href="https://arxiv.org/abs/2507.17511" target="_blank" class="research-link">
-                                <i class="fas fa-file-alt"></i> arXiv Paper
+                            <a href="https://arxiv.org/abs/2507.17511" target="_blank" class="research-link-improved">
+                                <i class="fas fa-file-alt"></i> <span class="link-text">arXiv Paper</span>
                             </a>
-                            <a href="https://github.com/Cobalt-27/CompactFusion" target="_blank" class="research-link">
-                                <i class="fab fa-github"></i> GitHub
+                            <a href="https://github.com/Cobalt-27/CompactFusion" target="_blank" class="research-link-improved">
+                                <i class="fab fa-github"></i> <span class="link-text">GitHub</span>
                             </a>
                         </div>
                     </div>
 
                     <div class="research-card featured">
-                        <div class="research-header">
-                            <div class="research-icon">
-                                <i class="fas fa-route"></i>
-                            </div>
-                            <div class="research-meta">
-                                <h4 class="research-title">ML-SceGen: A Multi-level Scenario Generation Framework</h4>
-                                <div class="research-authors">
-                                    Authors: <strong>Yicheng Xiao</strong>, Yangyang Sun, Yicheng Lin
+                        <div class="research-card-header-row">
+                            <div class="research-header-left">
+                                <div class="research-icon-compact">
+                                    <i class="fas fa-route"></i>
                                 </div>
                             </div>
+                            <div class="research-tags">
+                                <span class="research-tag-item">LLM Agents</span>
+                                <span class="research-tag-separator">·</span>
+                                <span class="research-tag-item">Traffic Scenarios</span>
+                                <span class="research-tag-separator">·</span>
+                                <span class="research-tag-item">Answer Set Programming</span>
+                            </div>
                         </div>
+                        
+                        <h4 class="research-title-only">ML-SceGen: A Multi-level Scenario Generation Framework</h4>
+                        
+                        <div class="research-authors-improved">
+                            <span class="author-name"><strong>Yicheng Xiao*</strong></span><span class="author-separator">,</span>
+                            <span class="author-name">Yangyang Sun*</span><span class="author-separator">,</span>
+                            <span class="author-name">Yicheng Lin*</span>
+                        </div>
+                        
+                        <hr class="research-title-divider">
+                        
                         <div class="research-description">
                             A three-stage framework for generating comprehensive traffic scenarios in uncontrolled intersection settings using LLM agents and Answer Set Programming. Enables user controllability while generating scenarios containing danger factors.
                         </div>
+                        
                         <div class="research-links">
-                            <a href="https://arxiv.org/abs/2501.10782" target="_blank" class="research-link">
-                                <i class="fas fa-file-alt"></i> arXiv Paper
+                            <a href="https://arxiv.org/abs/2501.10782" target="_blank" class="research-link-improved">
+                                <i class="fas fa-file-alt"></i> <span class="link-text">arXiv Paper</span>
                             </a>
                         </div>
                     </div>
@@ -871,9 +1190,6 @@
                         </div>
                     </div>
                 </div>
-
-                <hr>
-
                 <div style="text-align: center; color: #999; margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;">
                     <em>Last updated: December 2025</em>
                 </div>
