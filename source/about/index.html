@@ -178,6 +178,23 @@
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         border-radius: 10px;
         border-left: 4px solid #667eea;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+      }
+      
+      .education-content {
+        flex: 1;
+      }
+      
+      .education-grade {
+        color: #aaa;
+        font-size: 0.9em;
+        font-weight: 400;
+        white-space: nowrap;
+        padding-left: 10px;
+        border-left: 1px solid rgba(0, 0, 0, 0.08);
       }
       
       .research-section {
@@ -768,6 +785,19 @@
           font-size: 1.2em;
         }
         
+        .education-item {
+          flex-direction: column;
+          gap: 10px;
+        }
+        
+        .education-grade {
+          border-left: none;
+          border-top: 1px solid rgba(0, 0, 0, 0.1);
+          padding-left: 0;
+          padding-top: 8px;
+          margin-top: 4px;
+        }
+        
         .contact-links {
           flex-direction: column;
           align-items: center;
@@ -879,19 +909,28 @@
                 <h2>Education</h2>
                 <div class="education-section">
                     <div class="education-item">
-                        <strong>Bachelor of Science in Computer Science</strong><br>
-                        <em>Southern University of Science and Technology (SUSTech)</em><br>
-                        <span style="color: #666;">2022 - Present</span> Expected Graduation: 2026
+                        <div class="education-content">
+                            <strong>Bachelor of Science in Computer Science</strong><br>
+                            <em>Southern University of Science and Technology (SUSTech)</em><br>
+                            <span style="color: #666;">2022 - Present</span> Expected Graduation: 2026
+                        </div>
+                        <div class="education-grade">GPA: 3.94/4.0</div>
                     </div>
                     
                     <div class="education-item">
-                        <strong>National University of Singapore (NUS) SoC Workshop</strong><br>
-                        <span style="color: #666;">2024.5 - 2024.7</span> Final Grade: A, Summer School
+                        <div class="education-content">
+                            <strong>National University of Singapore (NUS) SoC Workshop</strong><br>
+                            <span style="color: #666;">2024.5 - 2024.7</span> Summer School
+                        </div>
+                        <div class="education-grade">Grade: A</div>
                     </div>
                     
                     <div class="education-item">
-                        <strong>University of California, Berkeley (UCB) BISP</strong><br>
-                        <span style="color: #666;">2025.9 - 2025.12</span> Visiting Student
+                        <div class="education-content">
+                            <strong>University of California, Berkeley (UCB) BISP</strong><br>
+                            <span style="color: #666;">2025.9 - 2025.12</span> Visiting Student
+                        </div>
+                        <div class="education-grade" style="opacity: 0.5;">Pending</div>
                     </div>
                 </div>
                 <hr>
