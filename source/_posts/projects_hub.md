@@ -319,6 +319,32 @@ We have implemented the following features:
 - [x] Asynchronous Request
 - [x] User Call
 
+<h2 class="heading-with-badge">CS304 PeachIDE
+    <span class="badge" style="background-color:rgb(49, 120, 198);">TypeScript
+        <a href="https://github.com/sustech-cs304/team-project-25spring-2" target="_blank">
+            <img alt="github" src="/images/logos/github-mark-white.svg" width="30" height="30">
+        </a>
+    </span>
+</h2>
+
+> Contributors:
+> 1. Ben Chen
+> 2. Mingzhi Chen
+> 3. Tianrun Qiu (PM)
+> 4. Yicheng Xiao
+> 5. Zhuo Wang
+
+PeachIDE is an Intelligent Course-Aware IDE designed to integrate coding with learning resources. The project aims to transform how students engage with programming courses by making lectures more interactive, learning more intuitive, and collaboration seamless.
+
+**Key Features:**
+- **Intuitive Course Resource Management**: Provides a structured interface for organizing course materials. Users can take digital notes directly within the IDE, bookmark key concepts, and link resources to coding exercises for easy reference.
+- **Code-Linked Lecture Execution**: Lecture slides are embedded within the IDE, allowing students to modify and execute code snippets inline. This feature enables real-time experimentation with lecture examples and immediate feedback on code correctness.
+- **Collaborative Coding & Resource Sharing**: Supports real-time collaborative coding, discussion threads linked to lecture content, resource sharing among students, and built-in chat for team projects.
+- **Course Progress Tracking**: Tracks student progress through the course materials, showing completed tasks, upcoming assignments, and contents needing attention.
+- **AI Learning Assistant**: Summarizes lecture content, highlights key takeaways, generates mind map or flow charts for visualization, and creates quizzes for self-assessment with auto-grading and explanations.
+
+The project is built using TypeScript (77.2%), Python (18.9%), JavaScript (2.3%), and CSS (1.2%), providing a modern, full-stack solution for educational programming environments.
+
 <h2 class="heading-with-badge">Academic Record
     <span class="badge" style="background-color:rgb(255, 128, 0);">SUSTech</span>
 </h2>
