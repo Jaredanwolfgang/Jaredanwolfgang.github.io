@@ -1113,7 +1113,7 @@ Using the same parameters in the Time-Conditioned UNet, we can get the following
 
 <div style="display: flex; justify-content: center; gap: 30px; margin: 30px 0; flex-wrap: wrap;">
   <div style="text-align: center;">
-    <img src="/images/compsci180/proj_5b/part2/cond_training_curve.png" alt="Training Loss for Time Conditioned UNet" style="width: 100%; height: auto; border-radius: 4px;">
+    <img src="/images/compsci180/proj_5b/part2_sched/cond_training_curve.png" alt="Training Loss for Time Conditioned UNet" style="width: 100%; height: auto; border-radius: 4px;">
   </div>
 </div>
 
@@ -1182,7 +1182,7 @@ We can see that the Class-Conditioned UNet can help generate more accurate and c
 
 We observe that train without scheduler does not directly lead to a bad results. However, it does lead to slower convergence and therefore it is better to use scheduler.
 
-Results with Time-Conditioned Network:
+**Results with Time-Conditioned Network:**
 
 <div style="
   display: grid;
@@ -1240,7 +1240,7 @@ Results with Time-Conditioned Network:
 </div>
 
 
-Results with Class-Conditioned Network:
+**Results with Class-Conditioned Network:**
 
 <div style="
   display: grid;
@@ -1296,3 +1296,5 @@ Results with Class-Conditioned Network:
     >
   </div>
 </div>
+
+We can see that the differences between using scheduler and not using shceduler are not huge. However, using scheduler does lead to faster convergence.
