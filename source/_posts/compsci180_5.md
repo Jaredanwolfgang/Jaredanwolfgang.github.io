@@ -915,3 +915,384 @@ The following are the results of the hybrid images:
   document.addEventListener('DOMContentLoaded', initHybridAnimation);
   document.addEventListener('pjax:complete', initHybridAnimation);
 </script>
+
+# Part B: Flow Matching from Scratch
+
+## Part 1: Training a Single-Step Denoising UNet
+
+### Visualization of the Noising process
+
+After implementing the UNet, we can visualize the noising process by selecting different noise levels $\sigma$. The following are the results of the noising process:
+
+<div style="display: flex; justify-content: center; gap: 30px; margin: 30px 0; flex-wrap: wrap;">
+  <div style="text-align: center;">
+    <img src="/images/compsci180/proj_5b/part1/1_2.png" alt="Noising process with different noise levels" style="width: 100%; height: auto; border-radius: 4px;">
+  </div>
+</div>
+
+### Training Process Visualization
+
+I have trained the UNet for 5 epochs and each epoch process 253 batches with the batch size of 64. I select some of the images in the batch and produce a visualization of the training process. The following are the results before the training (epoch 0) and after the training (epoch 5):
+
+<div style="
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+">
+  <div style="text-align: center; max-width: 48%;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      Before Training (Epoch 0)
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part1/1_2_epoch_0.png"
+      alt="Training process before training"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+  <div style="text-align: center; max-width: 48%;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      After Training (Epoch 5)
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part1/1_2_epoch_5.png"
+      alt="Training process after training"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+</div>
+
+
+### Training Loss Visualization
+
+The training loss is as follows:
+
+<div style="display: flex; justify-content: center; gap: 30px; margin: 30px 0; flex-wrap: wrap;">
+  <div style="text-align: center;">
+    <img src="/images/compsci180/proj_5b/part1/1_2_training_loss.png" alt="Training loss" style="width: 100%; height: auto; border-radius: 4px;">
+  </div>
+</div>
+
+### Out-of-Distribution Testing
+
+I sample results on the test set with out-of-distribution noise levels after the model is trained. The following are the results:
+
+<div style="display: flex; justify-content: center; gap: 30px; margin: 30px 0; flex-wrap: wrap;">
+  <div style="text-align: center;">
+    <img src="/images/compsci180/proj_5b/part1/1_2_2.png" alt="Out-of-distribution testing" style="width: 100%; height: auto; border-radius: 4px;">
+  </div>
+</div>
+
+You can see that for the noise level that was lower than 0.5, the generated images are quite good. However, for the noise level that was higher than 0.5, the denoised images perform poorly. This is because the model is not adapted to the noise higher than 0.5.
+
+### Denoising Pure Noise Visualization 
+
+I used the trained model to denoise pure noise (input the pure noise and then use the images to calculated the mean as loss) and the visualization of the training process are as follows:
+
+<div style="
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+">
+  <div style="text-align: center; max-width: 48%;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      Before Training (Epoch 0)
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part1/1_2_3_epoch_0.png"
+      alt="Training process before training"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+  <div style="text-align: center; max-width: 48%;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      After Training (Epoch 5)
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part1/1_2_3_epoch_5.png"
+      alt="Training process after training"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+</div>
+
+You can see that the model can barely denoise the pure noise.
+
+### Denoising Pure Noise Training Loss Visualization
+
+The training loss is as follows:
+
+<div style="display: flex; justify-content: center; gap: 30px; margin: 30px 0; flex-wrap: wrap;">
+  <div style="text-align: center;">
+    <img src="/images/compsci180/proj_5b/part1/1_2_3_training_loss.png" alt="Training loss" style="width: 100%; height: auto; border-radius: 4px;">
+  </div>
+</div>
+
+The training loss is decreasing, however the results for different labels are the same. This is because when we train the model using pure noise as input, the model cannot distinguish the differences between the inputs of different labels. Thus, the results for all the predicted labels are very similar because they are trained on a dataset that does not really distinguish the input. So the results seem to be a combination of all the numbers, you can see a '3' shape, '6' shape and '8' shape because there are overlapping curves for these numbers. The results can also be summarized as a centroid for all the shape of the numbers.
+
+## Part 2: Training a Flow Matching Model
+
+### Training Loss for Time-Contiditioned UNet
+
+After implementing the UNet as told in the ipynb notebook and the tutorial, I was able to train the flow matching model with converging loss. The learning rate I use is $1e-2$ and the $\gamma$ for the scheduler is $0.99$.
+
+<div style="display: flex; justify-content: center; gap: 30px; margin: 30px 0; flex-wrap: wrap;">
+  <div style="text-align: center;">
+    <img src="/images/compsci180/proj_5b/part2_sched/training_curve.png" alt="Training Loss for Time Conditioned UNet" style="width: 100%; height: auto; border-radius: 4px;">
+  </div>
+</div>
+
+### Sampling results from the Time-Conditioned UNet
+
+I sampled some results from the epoch 1, 5 and 10 and we can see that the resuls are quite good.
+
+<div style="
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin: 30px 0;
+">
+  <!-- Before Epoch 1 -->
+  <div style="text-align: center;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      Before Training (Epoch 0)
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part2_sched/before_1.png"
+      alt="Before epoch 1"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+
+  <!-- After Epoch 1 -->
+  <div style="text-align: center;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      After Epoch 1
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part2_sched/after_1.png"
+      alt="After epoch 1"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+
+  <!-- After Epoch 5 -->
+  <div style="text-align: center;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      After Epoch 5
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part2_sched/after_5.png"
+      alt="After epoch 5"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+
+  <!-- After Epoch 10 -->
+  <div style="text-align: center;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      After Epoch 10
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part2_sched/after_10.png"
+      alt="After epoch 10"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+</div>
+
+
+### Training Loss for Class-Conditioned UNet
+
+Using the same parameters in the Time-Conditioned UNet, we can get the following training curve.
+
+<div style="display: flex; justify-content: center; gap: 30px; margin: 30px 0; flex-wrap: wrap;">
+  <div style="text-align: center;">
+    <img src="/images/compsci180/proj_5b/part2/cond_training_curve.png" alt="Training Loss for Time Conditioned UNet" style="width: 100%; height: auto; border-radius: 4px;">
+  </div>
+</div>
+
+### Sampling results from the Class-Conditioned UNet
+
+The visulization results are as follows: 
+
+<div style="
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin: 30px 0;
+">
+  <!-- Before Epoch 1 -->
+  <div style="text-align: center;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      Before Training (Epoch 0)
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part2_sched/cond_before_1.png"
+      alt="Before epoch 1"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+
+  <!-- After Epoch 1 -->
+  <div style="text-align: center;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      After Epoch 1
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part2_sched/cond_after_1.png"
+      alt="After epoch 1"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+
+  <!-- After Epoch 5 -->
+  <div style="text-align: center;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      After Epoch 5
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part2_sched/cond_after_5.png"
+      alt="After epoch 5"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+
+  <!-- After Epoch 10 -->
+  <div style="text-align: center;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      After Epoch 10
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part2_sched/cond_after_10.png"
+      alt="After epoch 10"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+</div>
+
+We can see that the Class-Conditioned UNet can help generate more accurate and clearer results than the time-conditioned network.
+
+### Train without scheduler
+
+We observe that train without scheduler does not directly lead to a bad results. However, it does lead to slower convergence and therefore it is better to use scheduler.
+
+Results with Time-Conditioned Network:
+
+<div style="
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin: 30px 0;
+">
+  <!-- Before Epoch 1 -->
+  <div style="text-align: center;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      Before Training (Epoch 0)
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part2/before_1.png"
+      alt="Before epoch 1"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+
+  <!-- After Epoch 1 -->
+  <div style="text-align: center;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      After Epoch 1
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part2/after_1.png"
+      alt="After epoch 1"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+
+  <!-- After Epoch 5 -->
+  <div style="text-align: center;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      After Epoch 5
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part2/after_5.png"
+      alt="After epoch 5"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+
+  <!-- After Epoch 10 -->
+  <div style="text-align: center;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      After Epoch 10
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part2/after_10.png"
+      alt="After epoch 10"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+</div>
+
+
+Results with Class-Conditioned Network:
+
+<div style="
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin: 30px 0;
+">
+  <!-- Before Epoch 1 -->
+  <div style="text-align: center;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      Before Training (Epoch 0)
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part2/cond_before_1.png"
+      alt="Before epoch 1"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+
+  <!-- After Epoch 1 -->
+  <div style="text-align: center;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      After Epoch 1
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part2/cond_after_1.png"
+      alt="After epoch 1"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+
+  <!-- After Epoch 5 -->
+  <div style="text-align: center;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      After Epoch 5
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part2/cond_after_5.png"
+      alt="After epoch 5"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+
+  <!-- After Epoch 10 -->
+  <div style="text-align: center;">
+    <div style="font-weight: 600; margin-bottom: 8px;">
+      After Epoch 10
+    </div>
+    <img
+      src="/images/compsci180/proj_5b/part2/cond_after_10.png"
+      alt="After epoch 10"
+      style="width: 100%; height: auto; border-radius: 6px;"
+    >
+  </div>
+</div>
